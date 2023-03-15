@@ -1,5 +1,6 @@
 <?php
     require_once("template_header.php");
+    require_once("template_menu.php");
     // require_once("menu.php");
     $currentPageId = 'accueil';
     if (isset($_GET['page'])) {
@@ -12,7 +13,9 @@
 </header> -->
 
 <body>
-
+    <?php
+        renderMenuToHTML($currentPageId)
+    ?>
 
     <section class="corps">
         <?php
