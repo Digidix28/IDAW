@@ -2,22 +2,40 @@ h1{
     color : blue;
 }
 footer {
+    /* margin-left: 2%; */
+    /* margin-right: 2%; */
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: #333;
     color: #fff;
-    text-align: center;
+    /* text-align: center; */
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
     }
 
 
 
 .container {
+    /* margin : 10px; */
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+footer p{
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.ligne {
+    flex-direction: row;
+}
+
+.colonne {
+    flex-direction: column;
 }
 
 .menu {
