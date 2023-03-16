@@ -1,14 +1,18 @@
 <?php
 
-function renderMenuToHTML($current_id)
+function renderMenuToHTML($current_id,$currentLanguage)
 {
     $myMenu = array(
-        "accueil" => array("Acceuil"),
-        "cv" => array("Mon CV"),
-        "hobies" => array("Mes hobbies"),
-        "infos_techniques" => array("Informations techniques")
+        "accueil" => array("Acceuil","HomePage"),
+        "cv" => array("Mon CV","My resume"),
+        "hobies" => array("Mes hobbies", "my hobbies"),
+        "infos_techniques" => array("Informations techniques","technical informations")
     );
 
+    $myLanguages = array(
+        "fr" => array('Français', "French"),
+        "eng" => array("Anglais", "English")
+    );
 
     echo "<nav class='navbar navbar-expand-lg navbar-dark fixed-top' id='mainNav'>
             <div class='container'>
@@ -22,10 +26,20 @@ function renderMenuToHTML($current_id)
 
     foreach ($myMenu as $pageId => $paramTab) {
 
-        if ($current_id == $pageId) {
-            echo "<li class='nav-item'><a class='nav-link' href = 'index.php?page={$pageId}'> {$paramTab[0]} </a></li>";
+        if ($currentLanguage == "fr") {
+            echo "<li class='nav-item'><a class='nav-link' href = 'index.php?page={$pageId}&lang={$currentLanguage}'> {$paramTab[0]} </a></li>";
         } else {
-            echo "<li class='nav-item'><a class='nav-link' href = 'index.php?page={$pageId}'> {$paramTab[0]} </a></li>";
+            echo "<li class='nav-item'><a class='nav-link' href = 'index.php?page={$pageId}&lang={$currentLanguage}'> {$paramTab[1]} </a></li>";
+        }
+    }
+    ;
+
+    foreach ($myLanguages as $language => $paramTab) {
+
+        if ($currentLanguage == "fr") {
+            echo "<li class='nav-item'><a class='nav-link' href = 'index.php?page={$current_id}&lang={$language}'> {$paramTab[0]} </a></li>";
+        } else {
+            echo "<li class='nav-item'><a class='nav-link' href = 'index.php?page={$current_id}&lang={$language}'> {$paramTab[1]} </a></li>";
         }
     }
     ;
