@@ -35,7 +35,7 @@
         ?>
     </section>
     <?php
-    require_once("fr/footer_template.php");
+    require_once("footer_template.php");
     ?>
 
 </body>
