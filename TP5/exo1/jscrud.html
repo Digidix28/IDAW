@@ -55,7 +55,7 @@
         <div class="form-group row">
             <label for="inputLike" class="col-sm-2 col-form-label">Adore le cours</label>
             <div class="col-sm-3">
-                
+
                 <input type="checkbox" class="form-control" id="inputLike">
             </div>
         </div>
@@ -68,29 +68,90 @@
         <div class="form-group row">
             <span class="col-sm-2"></span>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary form-control">Submit</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary form-control">Submit</button>
             </div>
         </div>
     </form>
     <script>
-        id = 0
-        function onDelete(id){
+        id = 0;
+        function onDelete(id) {
             $("#" + id).remove();
         }
+        var rowGlob ;
+        var update = false;
+
+        function onEdit(id) {
+            // get the row using the id
+            let row = $('#' + id);
+            rowGlob = row ; 
+            update = true;
+            // get the values of the cells in the row
+            let nom = row.find('td:eq(0)').text();
+            let prenom = row.find('td:eq(1)').text();
+            let date = row.find('td:eq(2)').text();
+            let like = row.find('td:eq(3)').text();
+            let remarque = row.find('td:eq(4)').text();
+
+            // populate the form with the row data
+            // On met .val pour accéder à des valeurs, par exemple aux valeurs du formulaire. Le .text permet d'accéder au texte de la balise.
+            $('#inputNom').val(nom);
+            $('#inputPrenom').val(prenom);
+            $('#inputDate').val(date);
+            $('#inputLike').prop('checked', like === 'true');
+            $('#inputRemarque').val(remarque);
+
+            // change the submit button to an update button
+            $('#submitBtn').text('Update');
+            // $('#addStudentForm').attr('onsubmit', 'onUpdate(${id});');
+        }
+        
+        // function onUpdate(id) {
+
+        //     print("on est rentré dans le code");
+        //     event.preventDefault();
+
+        //     let row = $('#' + id);
+            
+        //     let nom = $("#inputNom").val();
+        //     let prenom = $('#inputPrenom').val();
+        //     let date = $('#inputDate').val();
+        //     let like = $('#inputLike').val();
+        //     let remarque = $('#inputRemarque').val();
+
+        //     row.find('td:eq(0)').text() = nom;
+        //     row.find('td:eq(1)').text() = prenom;
+        //     row.find('td:eq(2)').text() = date;
+        //     row.find('td:eq(3)').text() = like;
+        //     row.find('td:eq(4)').text() = remarque;
+
+        // }
 
         function onFormSubmit() {
             // prevent the form to be sent to the server
             event.preventDefault();
+            if (update) {
+               
+                let nom = $("#inputNom").val();
+                let prenom = $('#inputPrenom').val();
+                let date = $('#inputDate').val();
+                let like = $('#inputLike').val();
+                let remarque = $('#inputRemarque').val();
 
-            let nom = $("#inputNom").val();
-            let prenom = $('#inputPrenom').val();
-            let date =  $('#inputDate').val();
-            let like =  $('#inputLike').val();
-            let remarque =  $('#inputRemarque').val();
-            id ++;
-            $("#studentsTableBody").append(`<tr id=${id}><td>${nom}</td><td>${prenom}</td><td>${date}</td><td>${like}</td><td>${remarque}</td><td><button type="button" data-id="${id}" onclick="onDelete(${id})">Supprimer</button></td><td></td></tr>`);
+                rowGlob.find('td:eq(0)').text(nom);
+                rowGlob.find('td:eq(1)').text(prenom);
+                rowGlob.find('td:eq(2)').text(date);
+                rowGlob.find('td:eq(3)').text(like);
+                rowGlob.find('td:eq(4)').text(remarque) ;
+            } else {
+                let nom = $("#inputNom").val();
+                let prenom = $('#inputPrenom').val();
+                let date = $('#inputDate').val();
+                let like = $('#inputLike').val();
+                let remarque = $('#inputRemarque').val();
+                id++;
+                $("#studentsTableBody").append(`<tr id=${id}><td>${nom}</td><td>${prenom}</td><td>${date}</td><td>${like}</td><td>${remarque}</td><td><button type="button" data-id="${id}" onclick="onDelete(${id})">Supprimer</button></td><td><button type="button" data-id="${id}" onclick="onEdit(${id})">Modifier</button></td></tr>`);
+            }
         }
-
     </script>
 </body>
 
