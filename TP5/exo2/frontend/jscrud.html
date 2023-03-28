@@ -5,6 +5,8 @@
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <title>tabletest</title>
     <style>
         body {
@@ -19,13 +21,13 @@
 </head>
 
 <body>
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th scope="col">Nom</th>
-                <th scope="col">Prenom</th>
-                <th scope="col">Date de naissance</th>
-                <th scope="col">Aime le cours Web</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Age</th>
+                <!-- <th scope="col">Aime le cours Web</th> -->
                 <th scope="col">Remarques</th>
                 <th scope="col">CRUD</th>
             </tr>
@@ -47,18 +49,18 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputDate" class="col-sm-2 col-form-label">Date de naissance</label>
+            <label for="inputDate" class="col-sm-2 col-form-label">Age</label>
             <div class="col-sm-3">
-                <input type="date" class="form-control" id="inputDate">
+                <input type="number" class="form-control" id="inputDate">
             </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <label for="inputLike" class="col-sm-2 col-form-label">Adore le cours</label>
             <div class="col-sm-3">
 
                 <input type="checkbox" class="form-control" id="inputLike">
             </div>
-        </div>
+        </div> -->
         <div class="form-group row">
             <label for="inputRemarque" class="col-sm-2 col-form-label">Remarques</label>
             <div class="col-sm-3">
@@ -73,17 +75,33 @@
         </div>
     </form>
     <script>
+
+            let dTable = $("#myTable").DataTable({
+                ajax: {
+                    url: "http://localhost/IDAW/TP5/exo2/backend/users.php",
+                    dataSrc: 'data'
+                },
+                columns: [
+                    { data: 'name' },
+                    { data: 'email' },
+                    { data: 'age' },
+                    { data: 'remarques' },
+                ]
+            })
+
+
+
         id = 0;
         function onDelete(id) {
             $("#" + id).remove();
         }
-        var rowGlob ;
+        var rowGlob;
         var update = false;
 
         function onEdit(id) {
             // get the row using the id
             let row = $('#' + id);
-            rowGlob = row ; 
+            rowGlob = row;
             update = true;
             // get the values of the cells in the row
             let nom = row.find('td:eq(0)').text();
@@ -104,56 +122,31 @@
             $('#submitBtn').text('Update');
             // $('#addStudentForm').attr('onsubmit', 'onUpdate(${id});');
         }
-        
-        // function onUpdate(id) {
-
-        //     print("on est rentré dans le code");
-        //     event.preventDefault();
-
-        //     let row = $('#' + id);
-            
-        //     let nom = $("#inputNom").val();
-        //     let prenom = $('#inputPrenom').val();
-        //     let date = $('#inputDate').val();
-        //     let like = $('#inputLike').val();
-        //     let remarque = $('#inputRemarque').val();
-
-        //     row.find('td:eq(0)').text() = nom;
-        //     row.find('td:eq(1)').text() = prenom;
-        //     row.find('td:eq(2)').text() = date;
-        //     row.find('td:eq(3)').text() = like;
-        //     row.find('td:eq(4)').text() = remarque;
-
-        // }
 
         function onFormSubmit() {
             // prevent the form to be sent to the server
             event.preventDefault();
-            if (update) {
-               
-                let nom = $("#inputNom").val();
-                let prenom = $('#inputPrenom').val();
-                let date = $('#inputDate').val();
-                let like = $('#inputLike').val();
-                let remarque = $('#inputRemarque').val();
 
-                rowGlob.find('td:eq(0)').text(nom);
-                rowGlob.find('td:eq(1)').text(prenom);
-                rowGlob.find('td:eq(2)').text(date);
-                rowGlob.find('td:eq(3)').text(like);
-                rowGlob.find('td:eq(4)').text(remarque) ;
-            } else {
-                let nom = $("#inputNom").val();
-                let prenom = $('#inputPrenom').val();
-                let date = $('#inputDate').val();
-                let like = $('#inputLike').val();
-                let remarque = $('#inputRemarque').val();
-                id++;
-                $("#studentsTableBody").append(`<tr id=${id}><td>${nom}</td><td>${prenom}</td><td>${date}</td><td>${like}</td><td>${remarque}</td><td><button type="button" data-id="${id}" onclick="onDelete(${id})">Supprimer</button></td><td><button type="button" data-id="${id}" onclick="onEdit(${id})">Modifier</button></td></tr>`);
-            }
+            var userData = [{
+                
+                    name: $("#inputNom").val(),
+                    email: $("#inputEmail").val(),
+                  
+                }];
+
+            $.ajax({
+                    type: "POST",
+                    url: "http://localhost/IDAW/TP5/exo2/backend/users.php",
+                    data: userData,
+                    dataType : 'json'
+
+                }).done(function(response){
+                    dTable.row.add(userData).draw(false);
+                });
         }
 
-    
+        
+
     </script>
 </body>
 
