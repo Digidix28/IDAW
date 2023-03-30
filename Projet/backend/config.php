@@ -15,4 +15,6 @@ $connectionString .= ";dbname=" . _MYSQL_DBNAME;
 $options = array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
 print("test branch 2");
 
+
+$_var ; 
 ?>
