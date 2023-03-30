@@ -45,7 +45,7 @@
         <div class="form-group row">
             <label for="inputPrenom" class="col-sm-2 col-form-label">prenom</label>
             <div class="col-sm-3">
-                <input type="text" class="form-control" id="inputPrenom">
+                <input type="email" class="form-control" id="inputMail">
             </div>
         </div>
         <div class="form-group row">
@@ -76,25 +76,70 @@
     </form>
     <script>
 
-            let dTable = $("#myTable").DataTable({
-                ajax: {
-                    url: "http://localhost/IDAW/TP5/exo2/backend/users.php",
-                    dataSrc: 'data'
+        let dTable = $("#myTable").DataTable({
+            ajax: {
+                url: "http://localhost/IDAW/TP5/exo2/backend/users.php",
+                dataSrc: 'data'
+            },
+            columns: [
+                { data: 'name' },
+                { data: 'email' },
+                { data: 'age' },
+                { data: 'remarques' },
+                {
+                    targets: -1,
+                    data: null,
+                    defaultContent: "<td><button class='editBtn'>Edit</button></td><td><button class='deleteBtn' onclick='onDelete()'>Delete</button></td>",
                 },
-                columns: [
-                    { data: 'name' },
-                    { data: 'email' },
-                    { data: 'age' },
-                    { data: 'remarques' },
-                ]
-            })
+            ],
+            createdRow: function (row, data, dataIndex) {
+                // Set the id of the edit button to the "id" key in the data
+                $(row).find('.editBtn').attr('id', data.id);
+                $(row).find('.deleteBtn').attr('id', data.id);
+            }
+
+
+        });
 
 
 
         id = 0;
-        function onDelete(id) {
-            $("#" + id).remove();
-        }
+        $('#myTable tbody').on('click', 'deleteBtn', function () {
+
+            var id_btn = $(event.target).attr('id');
+            var userData = {
+                'id': id_btn
+            }
+            $.ajax({
+                type: 'DELETE',
+                url: `http://localhost/IDAW/TP5/exo2/backend/users.php?id=${id_btn}`,
+                dataType: 'json',
+            }).done(function () {
+                dTable
+                    .row($(this).parents('tr'))
+                    .remove()
+                    .draw();
+            });
+
+
+        });
+
+        // function onDelete() {
+        //     var id_btn = $(event.target).attr('id');
+        //     var userData = {
+        //         'id': id_btn
+        //     }
+        //     $.ajax({
+        //         type: 'DELETE',
+        //         url: `http://localhost/IDAW/TP5/exo2/backend/users.php?id=${id_btn}`,
+        //         dataType: 'json',
+        //     }).done(function (resp) {
+        //         console.log(resp);
+        //         let e = $('#'+id_btn).parents('tr');
+        //         dTable.row(e).remove().draw();
+        //     });
+
+
         var rowGlob;
         var update = false;
 
@@ -127,25 +172,25 @@
             // prevent the form to be sent to the server
             event.preventDefault();
 
-            var userData = [{
-                
-                    name: $("#inputNom").val(),
-                    email: $("#inputEmail").val(),
-                  
-                }];
+            var userData = {
+
+                name: $("#inputNom").val(),
+                email: $("#inputMail").val(),
+
+            };
 
             $.ajax({
-                    type: "POST",
-                    url: "http://localhost/IDAW/TP5/exo2/backend/users.php",
-                    data: userData,
-                    dataType : 'json'
+                type: "POST",
+                url: "http://localhost/IDAW/TP5/exo2/backend/users.php",
+                data: userData,
+                dataType: 'json'
 
-                }).done(function(response){
-                    dTable.row.add(userData).draw(false);
-                });
+            }).done(function (response) {
+                dTable.row.add(userData).draw(false);
+            });
         }
 
-        
+
 
     </script>
 </body>

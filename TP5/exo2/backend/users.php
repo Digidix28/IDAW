@@ -16,13 +16,19 @@ try {
             echo json_encode($res);
             break;
         case 'POST':
-            if (isset($_POST['email']) && isset($_POST['name'])) {
+            if (isset($_POST['email']) && isset($_POST['name']) && isset($_POST['age']) && isset($_POST['remarque'])) {
                 $name = $_POST['name'];
                 $mail = $_POST['email'];
                 addUser($pdo, $name, $mail);
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);
+            }
+            break;
+        case 'DELETE':
+            if(isset($_GET['id'])){
+                $id = $_GET['id'];
+                deleteUser($pdo,$id);
             }
 
     }
@@ -31,4 +37,3 @@ try {
     echo "Erreur : " . $erreur->getMessage();
 
 }
-?>
