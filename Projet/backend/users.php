@@ -12,11 +12,11 @@ try {
     switch ($request_method) {
         case 'GET':
             $users = getUsers($pdo);
-            $res = [ "data" => $users];
+            $res = ["data" => $users];
             echo json_encode($res);
             break;
         case 'POST':
-            if (isset($_POST['email']) && isset($_POST['name']) && isset($_POST['age']) && isset($_POST['remarque'])) {
+            if (isset($_POST['login']) && isset($_POST['nom']) && isset($_POST['mdp']) && isset($_POST[''])) {
                 $name = $_POST['name'];
                 $mail = $_POST['email'];
                 addUser($pdo, $name, $mail);
@@ -26,10 +26,14 @@ try {
             }
             break;
         case 'DELETE':
-            if(isset($_GET['id'])){
+            if (isset($_GET['id'])) {
                 $id = $_GET['id'];
-                deleteUser($pdo,$id);
+                deleteUser($pdo, $id);
             }
+        case 'PUT':
+            updateUsers();
+            break;
+
 
     }
 } catch (PDOException $erreur) {
