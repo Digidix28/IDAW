@@ -8,7 +8,7 @@
         // echo 'Connexion réussie';
 
          // Création et remplissage des tables (le code de la requête SQL pour le faire est écrit dans l'export)
-         $create_table_request = file_get_contents("sql/projet-4.sql");
+         $create_table_request = file_get_contents("../sql/projet.sql");
          $pdo->exec($create_table_request);
         print('db recreated');
 
