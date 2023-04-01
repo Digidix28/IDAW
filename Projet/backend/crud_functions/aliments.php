@@ -1,14 +1,14 @@
 <?php
 
 // Fonctions basiques
-function addAliment($pdo, $name, $mail)
+function addAliment($pdo, $name)
 {
     $stmt = $pdo->prepare("INSERT INTO aliments(nom) VALUES ('$name')");
     $stmt->execute();
 
-    $id = $pdo->lastInsertId();
+    // $id = $pdo->lastInsertId();
 
-    echo '{ "id" : ' . $id . '}';
+    // echo '{ "id" : ' . $id . '}';
 }
 
 function getAliments($pdo)

@@ -15,6 +15,7 @@ function getConsommation($pdo, $userId)
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':userId', $userId);
     $stmt->execute();
+
 }
 
 function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
@@ -39,6 +40,7 @@ function deleteConsommation($pdo,$idUser,$idAliment){
 }
 
 function updateConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation){
+    
     $sql = "UPDATE consomme 
     SET quantite = :quantite, date_consommation = :dateConsommation 
     WHERE id_user = :idUser AND id_alim = :idAliment";
@@ -49,5 +51,6 @@ function updateConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
     $stmt->bindParam(':quantite', $quantite);
     $stmt->bindParam(':dateConsommation', $dateConsommation);
     $stmt->execute();
+
 }
 ?>
