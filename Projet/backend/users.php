@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once("../crud_functions/users.php");
+require_once("crud_functions/users.php");
 require_once("config.php");
 
 
