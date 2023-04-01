@@ -4,6 +4,7 @@
 
 function getConsommation($pdo, $userId)
 {
+
     $sql = "SELECT aliments.nom_aliment, SUM(consomme.quantite) AS total_quantite
     FROM consomme
     INNER JOIN aliments ON consomme.id_aliment = aliments.id_aliment
@@ -15,6 +16,8 @@ function getConsommation($pdo, $userId)
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':userId', $userId);
     $stmt->execute();
+    $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultat;
 
 }
 
