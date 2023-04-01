@@ -16,10 +16,16 @@ try {
             echo json_encode($res);
             break;
         case 'POST':
-            if (isset($_POST['login']) && isset($_POST['nom']) && isset($_POST['mdp']) && isset($_POST[''])) {
-                $name = $_POST['name'];
-                $mail = $_POST['email'];
-                addUser($pdo, $name, $mail);
+            //$name, $prenom, $mail , $sexe , $age , $mdp, $poid
+            if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['login']) && isset($_POST['sexe'])&& isset($_POST['age'])&& isset($_POST['mdp'])&& isset($_POST['poid'])) {
+                $nom = $_POST['nom'];
+                $prenom = $_POST['prenom'];
+                $login = $_POST['login'];
+                $sexe = $_POST['sexe'];
+                $age = $_POST['age'];
+                $mdp = $_POST['mdp'];
+                $poid = $_POST['poid'];
+                addUser($pdo, $nom, $prenom, $mail, $sexe, $age, $mdp, $poid);
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);
