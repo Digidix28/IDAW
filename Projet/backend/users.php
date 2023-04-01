@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once("crud_functions.php");
+require_once("../crud_functions/users.php");
 require_once("config.php");
 
 
@@ -32,12 +32,22 @@ try {
             }
             break;
         case 'DELETE':
-            if (isset($_GET['id'])) {
+            if (isset($_GET['id_user'])) {
                 $id = $_GET['id'];
                 deleteUser($pdo, $id);
             }
         case 'PUT':
-            updateUsers();
+            if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['login']) && isset($_POST['sexe'])&& isset($_POST['age'])&& isset($_POST['mdp'])&& isset($_POST['poid'])&& isset($_POST['id_user'])){
+                $id = $_POST['id_user'];
+                $nom = $_POST['nom'];
+                $prenom = $_POST['prenom'];
+                $login = $_POST['login'];
+                $sexe = $_POST['sexe'];
+                $age = $_POST['age'];
+                $mdp = $_POST['mdp'];
+                $poid = $_POST['poid'];
+            }
+            updateUser($pdo, $id, $nom, $prenom, $mail, $sexe, $age, $mdp, $poid);
             break;
 
 
