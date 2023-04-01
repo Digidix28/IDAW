@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 29 mars 2023 à 21:18
+-- Généré le : ven. 31 mars 2023 à 15:03
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -3355,41 +3355,43 @@ CREATE TABLE IF NOT EXISTS `users` (
   `prenom` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `sexe` tinyint(1) DEFAULT NULL,
   `age` int DEFAULT NULL,
+  `mdp` int NOT NULL,
+  `poid` int NOT NULL,
   `id_cat` int DEFAULT NULL,
   PRIMARY KEY (`id_user`),
   KEY `EST_PART` (`id_cat`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id_user`, `login`, `nom`, `prenom`, `sexe`, `age`, `id_cat`) VALUES
-(1, 'william.nguyen@etu.imt-lille-douai.fr', 'NGUYEN', 'William', 0, 20, NULL),
-(2, 'alexis.poirot@etu.imt-lille-douai.fr', 'POIROT', 'Alexis', 0, 21, NULL),
-(3, 'antoine.lambert@etu.imt-lille-douai.fr', 'LAMBERT', 'Antoine', 0, 22, NULL),
-(4, 'cedric.prast@etu.imt-lille-douai.fr', 'PRAST', 'Cédric', 0, 23, NULL),
-(5, 'anthony.gouthier@etu.imt-lille-douai.fr', 'GOUTHIER', 'Anthony', 0, 24, NULL),
-(6, 'johan.gaudin@etu.imt-lille-douai.fr', 'GAUDIN', 'Johan', 0, 25, NULL),
-(7, 'guillaume.faure@etu.imt-lille-douai.fr', 'FAURE', 'Guillaume', 0, 26, NULL),
-(8, 'hatim.hebboul@etu.imt-lille-douai.fr', 'HEBBOUL', 'Hatim', 0, 27, NULL),
-(9, 'armand.sumo@etu.imt-lille-douai.fr', 'SUMO MOUDJIE TCHAMABE', 'Armand', 0, 28, NULL),
-(10, 'mathis.jolivel@etu.imt-lille-douai.fr', 'JOLIVEL', 'Mathis', 0, 29, NULL),
-(11, 'ezzat.al.zahabi@etu.imt-lille-douai.fr', 'AL ZAHABI', 'Ezzat', 0, 30, NULL),
-(12, 'gaelle.erhart@etu.imt-lille-douai.fr', 'ERHART', 'Gaelle', 0, 31, NULL),
-(13, 'lucas.arib@etu.imt-lille-douai.fr', 'ARIB', 'Lucas', 0, 32, NULL),
-(14, 'hugo.lim@etu.imt-lille-douai.fr', 'LIM', 'Hugo', 0, 33, NULL),
-(15, 'sacha.sicoli@etu.imt-lille-douai.fr', 'SICOLI', 'Sacha', 0, 34, NULL),
-(16, 'emil.perouse@etu.imt-lille-douai.fr', 'PEROUSE', 'Emil', 0, 35, NULL),
-(17, 'lea.grumiaux@etu.imt-lille-douai.fr', 'GRUMIAUX', 'Léa', 1, 36, NULL),
-(18, 'pierre.martin@etu.imt-lille-douai.fr', 'MARTIN', 'Pierre', 0, 37, NULL),
-(19, 'kanlanfaye.djamoine@etu.imt-lille-douai.fr', 'DJAMOINE', 'Kanlanfaye', 0, 38, NULL),
-(20, 'tanguy.feenstra@etu.imt-lille-douai.fr', 'FEENSTRA', 'Tanguy', 0, 39, NULL),
-(21, 'maxime.de.veyrac@etu.imt-lille-douai.fr', 'DE VEYRAC', 'Maxime', 0, 40, NULL),
-(22, 'mekki.ben.hamidouche@etu.imt-lille-douai.fr', 'BEN HAMIDOUCHE', 'Mekki', 0, 41, NULL),
-(23, 'julia.zink@etu.imt-lille-douai.fr', 'ZINK', 'Julia', 1, 42, NULL),
-(24, 'alexandre.favreau@etu.imt-lille-douai.fr', 'FAVREAU', 'Alexandre', 0, 43, NULL),
-(25, 'nilavan.deva@etu.imt-lille-douai.fr', 'DEVA', 'Nilavan', 1, 44, NULL);
+INSERT INTO `users` (`id_user`, `login`, `nom`, `prenom`, `sexe`, `age`, `mdp`, `poid`, `id_cat`) VALUES
+(1, 'william.nguyen@etu.imt-lille-douai.fr', 'NGUYEN', 'William', 0, 20, 1000000, 55, NULL),
+(2, 'alexis.poirot@etu.imt-lille-douai.fr', 'POIROT', 'Alexis', 0, 21, 1000001, 56, NULL),
+(3, 'antoine.lambert@etu.imt-lille-douai.fr', 'LAMBERT', 'Antoine', 0, 22, 1000002, 57, NULL),
+(4, 'cedric.prast@etu.imt-lille-douai.fr', 'PRAST', 'Cédric', 0, 23, 1000003, 58, NULL),
+(5, 'anthony.gouthier@etu.imt-lille-douai.fr', 'GOUTHIER', 'Anthony', 0, 24, 1000004, 59, NULL),
+(6, 'johan.gaudin@etu.imt-lille-douai.fr', 'GAUDIN', 'Johan', 0, 25, 1000005, 60, NULL),
+(7, 'guillaume.faure@etu.imt-lille-douai.fr', 'FAURE', 'Guillaume', 0, 26, 1000006, 61, NULL),
+(8, 'hatim.hebboul@etu.imt-lille-douai.fr', 'HEBBOUL', 'Hatim', 0, 27, 1000007, 62, NULL),
+(9, 'armand.sumo@etu.imt-lille-douai.fr', 'SUMO MOUDJIE TCHAMABE', 'Armand', 0, 28, 1000008, 63, NULL),
+(10, 'mathis.jolivel@etu.imt-lille-douai.fr', 'JOLIVEL', 'Mathis', 0, 29, 1000009, 64, NULL),
+(11, 'ezzat.al.zahabi@etu.imt-lille-douai.fr', 'AL ZAHABI', 'Ezzat', 0, 30, 1000010, 65, NULL),
+(12, 'gaelle.erhart@etu.imt-lille-douai.fr', 'ERHART', 'Gaelle', 0, 31, 1000011, 66, NULL),
+(13, 'lucas.arib@etu.imt-lille-douai.fr', 'ARIB', 'Lucas', 0, 32, 1000012, 67, NULL),
+(14, 'hugo.lim@etu.imt-lille-douai.fr', 'LIM', 'Hugo', 0, 33, 1000013, 68, NULL),
+(15, 'sacha.sicoli@etu.imt-lille-douai.fr', 'SICOLI', 'Sacha', 0, 34, 1000014, 69, NULL),
+(16, 'emil.perouse@etu.imt-lille-douai.fr', 'PEROUSE', 'Emil', 0, 35, 1000015, 70, NULL),
+(17, 'lea.grumiaux@etu.imt-lille-douai.fr', 'GRUMIAUX', 'Léa', 1, 36, 1000016, 65, NULL),
+(18, 'pierre.martin@etu.imt-lille-douai.fr', 'MARTIN', 'Pierre', 0, 37, 1000017, 72, NULL),
+(19, 'kanlanfaye.djamoine@etu.imt-lille-douai.fr', 'DJAMOINE', 'Kanlanfaye', 0, 38, 1000018, 73, NULL),
+(20, 'tanguy.feenstra@etu.imt-lille-douai.fr', 'FEENSTRA', 'Tanguy', 0, 39, 1000019, 74, NULL),
+(21, 'maxime.de.veyrac@etu.imt-lille-douai.fr', 'DE VEYRAC', 'Maxime', 0, 40, 1000020, 75, NULL),
+(22, 'mekki.ben.hamidouche@etu.imt-lille-douai.fr', 'BEN HAMIDOUCHE', 'Mekki', 0, 41, 1000021, 76, NULL),
+(23, 'julia.zink@etu.imt-lille-douai.fr', 'ZINK', 'Julia', 1, 42, 1000022, 55, NULL),
+(24, 'alexandre.favreau@etu.imt-lille-douai.fr', 'FAVREAU', 'Alexandre', 0, 43, 1000023, 78, NULL),
+(25, 'nilavan.deva@etu.imt-lille-douai.fr', 'DEVA', 'Nilavan', 1, 44, 1000024, 45, NULL);
 
 --
 -- Contraintes pour les tables déchargées

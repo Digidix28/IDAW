@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once("crud_functions.php");
+require_once("../crud_functions/aliments.php");
 require_once("config.php");
 
 
@@ -11,15 +11,14 @@ try {
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':
-            $users = getUsers($pdo);
-            $res = [ "data" => $users];
+            $aliments = getAliments($pdo);
+            $res = [ "data" => $aliments];
             echo json_encode($res);
             break;
         case 'POST':
-            if (isset($_POST['email']) && isset($_POST['name']) && isset($_POST['age']) && isset($_POST['remarque'])) {
+            if (isset($_POST['name'])) {
                 $name = $_POST['name'];
-                $mail = $_POST['email'];
-                addUser($pdo, $name, $mail);
+                addAliment($pdo, $name);
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);
@@ -28,7 +27,7 @@ try {
         case 'DELETE':
             if(isset($_GET['id'])){
                 $id = $_GET['id'];
-                deleteUser($pdo,$id);
+                deleteAliments($pdo,$id);
             }
 
     }
@@ -37,3 +36,5 @@ try {
     echo "Erreur : " . $erreur->getMessage();
 
 }
+
+?>
