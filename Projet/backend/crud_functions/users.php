@@ -1,5 +1,4 @@
 <?php
-
 function addUser($pdo, $nom, $prenom, $login , $sexe , $age , $mdp, $poid)
 {
     $stmt = $pdo->prepare("INSERT INTO users( nom , login , prenom , sexe , age , mdp , poid ) VALUES ('$nom', '$login', '$prenom', '$sexe' , '$age' , '$mdp', '$poid')");
@@ -9,7 +8,6 @@ function addUser($pdo, $nom, $prenom, $login , $sexe , $age , $mdp, $poid)
 
     echo '{ "id_user" : ' . $id . '}';
 }
-
 function getUsers($pdo)
 {
     $request = $pdo->prepare("select * from users");
@@ -20,7 +18,6 @@ function getUsers($pdo)
 }
 
 function deleteUser($pdo,$id){
-
     $request = $pdo->prepare("DELETE FROM users WHERE id_user = $id");
     $request->execute();
 }
@@ -36,6 +33,7 @@ function updateUser($pdo, $id, $nom, $prenom, $login , $sexe , $age , $mdp, $poi
             mdp = :mdp,
             poid = :poid
             WHERE id_user = :id";
+    echo $sql; 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':nom', $nom);
