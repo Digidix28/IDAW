@@ -55,7 +55,7 @@ function deleteConsommation($pdo,$idUser,$idAliment){
 function updateConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation){
     
     $sql = "UPDATE consomme 
-    SET quantité = ':quantite', date_consommation = ':dateConsommation' 
+    SET quantité = :quantite, date_consommation = :dateConsommation 
     WHERE id_user = :idUser AND id_alim = :idAliment";
 
     $stmt = $pdo->prepare($sql);

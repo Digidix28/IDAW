@@ -42,22 +42,25 @@ try {
             }
             break;
         case 'PUT':
-            if (isset($_POST['user_id']) && isset($_POST['aliment_id']) && isset($_POST['quantite']) && isset($_POST['date_consommation'])) {
-                $idUser = $_POST['user_id'];
-                $idAliment = $_POST['aliment_id'];
-                $quantite = $_POST['quantite'];
-                $dateConsommation = $_POST['date_consommation'];
+            $json = file_get_contents('php://input');
+            $put = json_decode($json, TRUE);
+            $idUser = $put['user_id'];
+            $idAliment = $put['aliment_id'];
+            $quantite = $put['quantite'];
+            $dateConsommation = $put['date_consommation'];
 
-                echo "idUser: " . $idUser . "\n";
-                echo "idAliment: " . $idAliment . "\n";
-                echo "quantite: " . $quantite . "\n";
-                echo "dateConsommation: " . $dateConsommation . "\n";
-
+            echo "idUser: " . $idUser . "\n";
+            echo "idAliment: " . $idAliment . "\n";
+            echo "quantite: " . $quantite . "\n";
+            echo "dateConsommation: " . $dateConsommation . "\n";
+            if(isset($idUser) && isset($idAliment)){
                 updateConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
                 http_response_code(201);
-            } else {
+            } else{
                 http_response_code(400);
             }
+            
+
             break;
         default:
             http_response_code(405);

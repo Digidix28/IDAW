@@ -24,14 +24,17 @@ try {
             }
             break;
         case 'PUT':
-            if (isset($_GET['id']) && isset($_POST['name'])) {
-                $id = $_GET['id'];
-                $name = $_POST['name'];
+            $json = file_get_contents('php://input');
+            $put = json_decode($json, TRUE);
+            $id = $put['id'];
+            $name = $put['name'];
+            if(isset($id) && isset($name)){
                 updateAliments($pdo, $id, $name);
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);
             }
+
             break;
         case 'DELETE':
             if (isset($_GET['id'])) {
