@@ -10,13 +10,12 @@ try {
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':
-            if(isset($_GET['user_id'])){
+            if (isset($_GET['user_id'])) {
                 $userId = $_GET['user_id'];
                 $consommation = getConsommation($pdo, $userId);
-                $res = [ "data" => $consommation];
+                $res = ["data" => $consommation];
                 echo json_encode($res);
             } else {
-
                 http_response_code(400);
             }
             break;
@@ -27,13 +26,13 @@ try {
                 $quantite = $_POST['quantite'];
                 $dateConsommation = $_POST['date_consommation'];
                 addConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
-                http_response_code(201); // set HTTP status code to 201
+                http_response_code(201);
             } else {
                 http_response_code(400);
             }
             break;
         case 'DELETE':
-            if(isset($_GET['user_id']) && isset($_GET['aliment_id'])){
+            if (isset($_GET['user_id']) && isset($_GET['aliment_id'])) {
                 $idUser = $_GET['user_id'];
                 $idAliment = $_GET['aliment_id'];
                 deleteConsommation($pdo, $idUser, $idAliment);
@@ -48,8 +47,14 @@ try {
                 $idAliment = $_POST['aliment_id'];
                 $quantite = $_POST['quantite'];
                 $dateConsommation = $_POST['date_consommation'];
+
+                echo "idUser: " . $idUser . "\n";
+                echo "idAliment: " . $idAliment . "\n";
+                echo "quantite: " . $quantite . "\n";
+                echo "dateConsommation: " . $dateConsommation . "\n";
+
                 updateConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
-                http_response_code(201); // set HTTP status code to 201
+                http_response_code(201);
             } else {
                 http_response_code(400);
             }

@@ -5,11 +5,11 @@
 function getConsommation($pdo, $userId)
 {
 
-    $sql = "SELECT aliments.nom_aliment, SUM(consomme.quantite) AS total_quantite
+    $sql = "SELECT aliments.nom, SUM(consomme.quantité) AS total_quantite
     FROM consomme
-    INNER JOIN aliments ON consomme.id_aliment = aliments.id_aliment
-    INNER JOIN users ON consomme.id_user = users.id
-    WHERE users.id = :userId
+    INNER JOIN aliments ON consomme.id_alim = aliments.id
+    INNER JOIN users ON consomme.id_user = :userId
+    WHERE users.id_user = :userId
     GROUP BY aliments.nom;
     ";
 
@@ -23,8 +23,13 @@ function getConsommation($pdo, $userId)
 
 function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
 {
+    // $sql = "SET FOREIGN_KEY_CHECKS=0;";
+
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
     $sql = "INSERT INTO consomme
-    VALUES(:idUser,:idAliment,:quantite,:dateConsommation);";
+    VALUES(:idAliment,:idUser,:quantite,:dateConsommation);";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':idUser', $idUser);
@@ -32,6 +37,11 @@ function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
     $stmt->bindParam(':quantite', $quantite);
     $stmt->bindParam(':dateConsommation', $dateConsommation);
     $stmt->execute();
+
+    // $sql = "SET FOREIGN_KEY_CHECKS=1;";
+
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 }
 
 function deleteConsommation($pdo,$idUser,$idAliment){
@@ -45,9 +55,9 @@ function deleteConsommation($pdo,$idUser,$idAliment){
 function updateConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation){
     
     $sql = "UPDATE consomme 
-    SET quantite = :quantite, date_consommation = :dateConsommation 
+    SET quantité = ':quantite', date_consommation = ':dateConsommation' 
     WHERE id_user = :idUser AND id_alim = :idAliment";
-    
+
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':idUser', $idUser);
     $stmt->bindParam(':idAliment', $idAliment);
