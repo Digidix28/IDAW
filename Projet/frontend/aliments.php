@@ -1,5 +1,5 @@
 <?php
-    require_once("template_header.php")
+    require_once("templates/template_header.php")
 ?>
     <body>
         <main>
@@ -12,14 +12,14 @@
             <div class="container colonne">
                 <img src="images/cv_img.jpg" alt="CV" style=" width: 150px;">
                 <?php
-                    require_once("template_menu.php");
+                    require_once("templates/template_menu.php");
                     renderMenuToHTML('cv');
                 ?>
             </div>
 
     </main>
     <?php
-            require_once("footer_template.php")
+            require_once("templates/footer_template.php")
         ?>
     </body>
 </html>
