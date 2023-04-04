@@ -1,28 +1,37 @@
 <?php
-function addUser($pdo, $nom, $prenom, $login , $sexe , $age , $mdp, $poid)
+function addUser($pdo, $nom, $prenom, $login, $sexe, $age, $mdp, $poid)
 {
     $stmt = $pdo->prepare("INSERT INTO users( nom , login , prenom , sexe , age , mdp , poid ) VALUES ('$nom', '$login', '$prenom', '$sexe' , '$age' , '$mdp', '$poid')");
-    $stmt->execute();   
+    $stmt->execute();
 
     $id = $pdo->lastInsertId();
 
     echo '{ "id_user" : ' . $id . '}';
 }
-function getUsers($pdo)
+function getUsers($pdo, $login, $mdp)
 {
     $request = $pdo->prepare("select * from users");
     $request->execute();
 
     $resultat = $request->fetchAll(PDO::FETCH_ASSOC);
-    return $resultat;
+    $users_exist = false;
+    foreach ($resultat as $user)
+        if (($user['login'] == $login) && $user['mdp'] = $mdp) {
+            $users_exist = true;
+        } else {
+            $users_exist = false;
+        }
+    return $users_exist;
 }
 
-function deleteUser($pdo,$id){
+function deleteUser($pdo, $id)
+{
     $request = $pdo->prepare("DELETE FROM users WHERE id_user = $id");
     $request->execute();
 }
 
-function updateUser($pdo, $id, $nom, $prenom, $login , $sexe , $age , $mdp, $poid) {
+function updateUser($pdo, $id, $nom, $prenom, $login, $sexe, $age, $mdp, $poid)
+{
     $sql = "UPDATE users 
             SET 
             nom = :nom, 
@@ -33,7 +42,7 @@ function updateUser($pdo, $id, $nom, $prenom, $login , $sexe , $age , $mdp, $poi
             mdp = :mdp,
             poid = :poid
             WHERE id_user = :id";
-    echo $sql; 
+    echo $sql;
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':nom', $nom);
