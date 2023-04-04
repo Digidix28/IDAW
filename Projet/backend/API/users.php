@@ -42,6 +42,9 @@ try {
             if (isset($_GET['id_user'])) {
                 $id = $_GET['id_user'];
                 deleteUser($pdo, $id);
+                http_response_code(201);
+            }else{
+                http_response_code(400);
             }
             break;
 
@@ -49,7 +52,6 @@ try {
 
             $json = file_get_contents('php://input');
             $put = json_decode($json, TRUE);
-            echo "je suis à l'extérieur du if ";
             if (isset($put['nom']) && isset($put['prenom']) && isset($put['login']) && isset($put['sexe']) && isset($put['age']) && isset($put['mdp']) && isset($put['poid']) && isset($put['id_user'])) {
                 $id = $put['id_user'];
                 $nom = $put['nom'];
@@ -70,5 +72,5 @@ try {
 } catch (PDOException $erreur) {
     http_response_code(500);
     echo "Erreur : " . $erreur->getMessage();
-
 }
+?>
