@@ -7,7 +7,6 @@ require_once("config.php");
 try {
     $pdo = new PDO($connectionString, _MYSQL_USER, _MYSQL_PASSWORD, $options);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':
@@ -21,6 +20,8 @@ try {
                 http_response_code(400);
             }
             break;
+
+
         case 'POST':
             if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['login']) && isset($_POST['sexe']) && isset($_POST['age']) && isset($_POST['mdp']) && isset($_POST['poid'])) {
                 $nom = $_POST['nom'];

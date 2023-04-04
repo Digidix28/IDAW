@@ -4,7 +4,7 @@
     <body>
         <main>
             <header>
-                <h1>Présentation de mon CV</h1>
+                <h1>Page d'indexation des aliments</h1>
             </header>
             <p> Cette page est dédiée à mon CV. J'ai déjà trouvé un stage pour cette année donc ne me contactez pas</p>
             
