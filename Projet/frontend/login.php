@@ -9,7 +9,7 @@ require_once("templates/template_header.php");
             <h2>Login</h2>
             <div class="form-group">
                 <label for="login">Login :</label>
-                <input type="text" id="login" name="login" required>
+                <input type="email" id="loginMail" name="login" required>
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe :</label>
@@ -19,7 +19,6 @@ require_once("templates/template_header.php");
                 <input type="submit" value="Se connecter...">
             </div>
         </form>
-
         <form id="signup-form" action="" onsubmit="onSignUpFormSubmit();">
             <h2>Sign Up</h2>
             <div class="form-group">
@@ -85,7 +84,8 @@ require_once("templates/template_header.php");
                 dataType: 'json'
 
             }).done(function (response) {
-            //    console.log(response.code);
+                window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+
             });
         }
 
@@ -95,11 +95,13 @@ require_once("templates/template_header.php");
 
             var userData = {
 
-                email: $("#login").val(),
+                login: $("#loginMail").val(),
                 mdp: $("#logInpassword").val()
 
 
             };
+
+            console.dir(userData);
 
             $.ajax({
                 type: "GET",
@@ -108,7 +110,18 @@ require_once("templates/template_header.php");
                 dataType: 'json'
 
             }).done(function (response) {
-                dTable.row.add(userData).draw(false);
+
+                var isConnected = response.data;
+                console.log(isConnected);
+
+                if (isConnected) {
+
+                    
+                    window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+
+                } else {
+
+                }
             });
         }
 
