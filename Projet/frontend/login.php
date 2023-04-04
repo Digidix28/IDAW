@@ -13,7 +13,7 @@ require_once("templates/template_header.php");
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="logInpassword" name="password" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="Se connecter...">
@@ -24,11 +24,11 @@ require_once("templates/template_header.php");
             <h2>Sign Up</h2>
             <div class="form-group">
                 <label for="email">Email :</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="SignUpEmail" name="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="SignUpPassword" name="password" required>
             </div>
             <div class="form-group">
                 <label for="nom">Nom :</label>
@@ -61,25 +61,31 @@ require_once("templates/template_header.php");
     <script>
 
         function onSignUpFormSubmit() {
-            // prevent the form to be sent to the server
+
             event.preventDefault();
 
             var userData = {
 
-                email: $("#inputMail").val(),
-                mdp: $("#inputNom").val()
-
-
+                login: $("#SignUpEmail").val(),
+                mdp: $("#SignUpPassword").val(),
+                nom: $("#nom").val(),
+                prenom: $("#prenom").val(),
+                sexe: $("#sexe").val(),
+                age: $("#age").val(),
+                poids: $("#poids").val(),
             };
 
+            console.dir(userData);
+
             $.ajax({
+
                 type: "POST",
                 url: "http://localhost/IDAW/Projet/backend/API/users.php",
                 data: userData,
                 dataType: 'json'
 
             }).done(function (response) {
-                dTable.row.add(userData).draw(false);
+            //    console.log(response.code);
             });
         }
 
@@ -89,8 +95,8 @@ require_once("templates/template_header.php");
 
             var userData = {
 
-                email: $("#inputMail").val(),
-                mdp: $("#inputNom").val()
+                email: $("#login").val(),
+                mdp: $("#logInpassword").val()
 
 
             };
