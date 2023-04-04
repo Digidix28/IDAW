@@ -11,25 +11,25 @@ try {
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':
-            if (isset($_GET['login']) && isset($_GET['mdp'])) {
-                $login = $_GET['login'];
-                $mdp = $_GET['mdp'];
-                $user = getUsers($pdo, $login, $mdp);
-                $res = ["data" => $user];
-                http_response_code(201);
-            } else {
-                http_response_code(400);
-            }
+            
+            if (isset($_GET['login']) && isset($_GET['mdp']))
+            $login = $_GET['login'] ;
+            $mdp = $_GET['mdp'] ;
+            $user = getUsers($pdo, $login,$mdp);
+            $res = ["data" => $user];
+            echo json_encode($res);
             break;
+
         case 'POST':
-            if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['login']) && isset($_POST['sexe']) && isset($_POST['age']) && isset($_POST['mdp']) && isset($_POST['poid'])) {
+
+            if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['login']) && isset($_POST['sexe']) && isset($_POST['age']) && isset($_POST['mdp']) && isset($_POST['poids'])) {
                 $nom = $_POST['nom'];
                 $prenom = $_POST['prenom'];
                 $login = $_POST['login'];
                 $sexe = $_POST['sexe'];
                 $age = $_POST['age'];
                 $mdp = $_POST['mdp'];
-                $poid = $_POST['poid'];
+                $poid = $_POST['poids'];
                 addUser($pdo, $nom, $prenom, $login, $sexe, $age, $mdp, $poid);
                 http_response_code(201);
             } else {
@@ -37,8 +37,8 @@ try {
             }
             break;
 
-
         case 'DELETE':
+
             if (isset($_GET['id_user'])) {
                 $id = $_GET['id_user'];
                 deleteUser($pdo, $id);
@@ -49,6 +49,7 @@ try {
             break;
 
         case 'PUT':
+
             $json = file_get_contents('php://input');
             $put = json_decode($json, TRUE);
             if (isset($put['nom']) && isset($put['prenom']) && isset($put['login']) && isset($put['sexe']) && isset($put['age']) && isset($put['mdp']) && isset($put['poid']) && isset($put['id_user'])) {
@@ -66,7 +67,6 @@ try {
                 http_response_code(400);
             }
             break;
-
 
     }
 } catch (PDOException $erreur) {
