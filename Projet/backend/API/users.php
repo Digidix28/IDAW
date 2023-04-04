@@ -11,12 +11,15 @@ try {
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':
-            if (isset($_GET['login']) && isset($_GET['mdp']))
-            $login = $_GET['login'] ;
-            $mdp = $_GET['mdp'] ;
-            $user = getUsers($pdo, $login,$mdp);
-            $res = ["data" => $user];
-            echo json_encode($res);
+            if (isset($_GET['login']) && isset($_GET['mdp'])) {
+                $login = $_GET['login'];
+                $mdp = $_GET['mdp'];
+                $user = getUsers($pdo, $login, $mdp);
+                $res = ["data" => $user];
+                http_response_code(201);
+            } else {
+                http_response_code(400);
+            }
             break;
         case 'POST':
             if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['login']) && isset($_POST['sexe']) && isset($_POST['age']) && isset($_POST['mdp']) && isset($_POST['poid'])) {
@@ -39,13 +42,15 @@ try {
             if (isset($_GET['id_user'])) {
                 $id = $_GET['id_user'];
                 deleteUser($pdo, $id);
+                http_response_code(201);
+            }else{
+                http_response_code(400);
             }
             break;
 
         case 'PUT':
             $json = file_get_contents('php://input');
             $put = json_decode($json, TRUE);
-            echo "je suis à l'extérieur du if ";
             if (isset($put['nom']) && isset($put['prenom']) && isset($put['login']) && isset($put['sexe']) && isset($put['age']) && isset($put['mdp']) && isset($put['poid']) && isset($put['id_user'])) {
                 $id = $put['id_user'];
                 $nom = $put['nom'];
@@ -67,5 +72,5 @@ try {
 } catch (PDOException $erreur) {
     http_response_code(500);
     echo "Erreur : " . $erreur->getMessage();
-
 }
+?>
