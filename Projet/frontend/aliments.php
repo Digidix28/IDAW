@@ -45,7 +45,7 @@
             <div class="form-group row">
                 <label for="inputType" class="col-sm-2 col-form-label">id_type</label>
                 <div class="col-sm-3">
-                    <input type="email" class="form-control" id="inputMail">
+                    <input type="text" class="form-control" id="inputMail">
                 </div>
             </div>
             <span class="col-sm-2"></span>
