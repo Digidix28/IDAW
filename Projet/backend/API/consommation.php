@@ -49,17 +49,18 @@ try {
             $quantite = $put['quantite'];
             $dateConsommation = $put['date_consommation'];
 
-            echo "idUser: " . $idUser . "\n";
-            echo "idAliment: " . $idAliment . "\n";
-            echo "quantite: " . $quantite . "\n";
-            echo "dateConsommation: " . $dateConsommation . "\n";
-            if(isset($idUser) && isset($idAliment)){
+            if (isset($idUser) && isset($idAliment)) {
                 updateConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
+                echo "idUser: " . $idUser . "\n";
+                echo "idAliment: " . $idAliment . "\n";
+                echo "quantite: " . $quantite . "\n";
+                echo "dateConsommation: " . $dateConsommation . "\n";
                 http_response_code(201);
-            } else{
+
+            } else {
                 http_response_code(400);
             }
-            
+
 
             break;
         default:
