@@ -2,11 +2,7 @@
 <html lang="fr">
 
 <head>
-    <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
     <?php
     require_once("templates/template_header.php")
         ?>
@@ -45,7 +41,7 @@
             <div class="form-group row">
                 <label for="inputType" class="col-sm-2 col-form-label">id_type</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="inputMail">
+                    <input type="text" class="form-control" id="inputType">
                 </div>
             </div>
             <span class="col-sm-2"></span>
@@ -123,8 +119,8 @@
 
                 var userData = {
 
-                    name: $("#inputNom").val(),
-                    email: $("#inputType").val(),
+                    nom: $("#inputNom").val(),
+                    id_type: $("#inputType").val(),
 
                 };
 
