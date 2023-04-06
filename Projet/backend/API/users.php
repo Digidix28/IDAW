@@ -33,7 +33,9 @@ try {
                 $age = $_POST['age'];
                 $mdp = $_POST['mdp'];
                 $poid = $_POST['poids'];
-                addUser($pdo, $nom, $prenom, $login, $sexe, $age, $mdp, $poid);
+                $id = addUser($pdo, $nom, $prenom, $login, $sexe, $age, $mdp, $poid);
+                $res = ["data" => $id];
+                echo json_encode($res);
                 http_response_code(201);
             } else {
                 http_response_code(400);

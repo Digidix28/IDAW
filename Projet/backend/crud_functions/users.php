@@ -3,18 +3,17 @@ function addUser($pdo, $nom, $prenom, $login, $sexe, $age, $mdp, $poid)
 {
     $stmt = $pdo->prepare("INSERT INTO users( nom , login , prenom , sexe , age , mdp , poid ) VALUES ('$nom', '$login', '$prenom', '$sexe' , '$age' , '$mdp', '$poid')");
     $stmt->execute();
-
     $id = $pdo->lastInsertId();
-
-    echo '{ "id_user" : ' . $id . '}';
+    return $id ;
 }
 function getUsers($pdo, $login, $mdp)
 {
-    $request = $pdo->prepare("SELECT * FROM users WHERE login = :login AND mdp = :mdp");
+    $request = $pdo->prepare("SELECT id_user FROM users WHERE login = :login AND mdp = :mdp");
     $request->execute(['login' => $login, 'mdp' => $mdp]);
     $resultat = $request->fetchAll(PDO::FETCH_ASSOC);
-    $users_exist = count($resultat) > 0;
-    return $users_exist;
+    $user_exists = count($resultat) > 0;
+    $user_id = $user_exists ? $resultat[0]['id_user'] : null;
+    return ['user_exists' => $user_exists, 'id_user' => $user_id];
 }
 
 function deleteUser($pdo, $id)
