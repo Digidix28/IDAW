@@ -1,11 +1,11 @@
 <?php
 require_once("templates/template_header.php");
 session_start();
-if (isset($_SESSION['id']) == false) {
+if (isset($_GET['id'])) {
+    $_SESSION['id'] = $_GET['id'];
+
+} else {
     header("Location: login.php");
-    exit;
-}else{
-    $id = $_SESSION['id'];
 }
 ?>
 
