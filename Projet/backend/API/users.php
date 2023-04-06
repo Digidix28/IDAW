@@ -7,7 +7,6 @@ require_once("config.php");
 try {
     $pdo = new PDO($connectionString, _MYSQL_USER, _MYSQL_PASSWORD, $options);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':

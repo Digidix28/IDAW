@@ -22,38 +22,38 @@
             renderMenuToHTML('cv');
             ?>
         </header>
-        <p> voici la liste des aliments présent dans notre base de donnes</p>
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">nom</th>
-                    <th scope="col">id_type</th>
-                    <th scope="col">CRUD</th>
-                </tr>
-            </thead>
-            <tbody id="AlimentsTableBody">
-            </tbody>
-        </table>
-        <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
-            <div class="form-group row">
-                <label for="inputNom" class="col-sm-2 col-form-label">Nom</label>
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" id="inputNom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+                        <div class="form-group">
+                            <label for="inputNom">Nom</label>
+                            <input type="text" class="form-control" id="inputNom">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputType">id_type</label>
+                            <input type="email" class="form-control" id="inputType">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+                    </form>
+                </div>
+                <div class="col-md-8">
+                    <p> voici la liste des aliments présent dans notre base de données</p>
+                    <table class="table" id="myTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">id</th>
+                                <th scope="col">nom</th>
+                                <th scope="col">id_type</th>
+                                <th scope="col">CRUD</th>
+                            </tr>
+                        </thead>
+                        <tbody id="AlimentsTableBody">
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="inputType" class="col-sm-2 col-form-label">id_type</label>
-                <div class="col-sm-3">
-                    <input type="email" class="form-control" id="inputMail">
-                </div>
-            </div>
-            <span class="col-sm-2"></span>
-            <div class="col-sm-2">
-                <button type="submit" id="submitBtn" class="btn btn-primary form-control">Submit</button>
-            </div>
-        </form>
-
+        </div>
         <script>
             let dTable = $("#myTable").DataTable({
                 ajax: {
@@ -140,6 +140,9 @@
             }
         </script>
     </main>
+    <?php
+    require_once("templates/footer_template.php")
+        ?>
 </body>
 
 </html>
