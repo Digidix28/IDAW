@@ -1,17 +1,13 @@
-<!doctype html>
-<html lang="fr">
-
-<head>
-    <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-    <?php
-    require_once("templates/template_header.php")
-        ?>
-</head>
-
+<?php
+require_once("templates/template_header.php");
+session_start();
+if (isset($_SESSION['id']) == false) {
+    header("Location: login.php");
+    exit;
+}else{
+    $id = $_SESSION['id'];
+}
+?>
 <body>
     <main>
         <header>
