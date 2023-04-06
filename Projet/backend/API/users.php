@@ -10,13 +10,17 @@ try {
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':
-            
-            if (isset($_GET['login']) && isset($_GET['mdp']))
-            $login = $_GET['login'] ;
-            $mdp = $_GET['mdp'] ;
-            $user = getUsers($pdo, $login,$mdp);
-            $res = ["data" => $user];
-            echo json_encode($res);
+
+            if (isset($_GET['login']) && isset($_GET['mdp'])) {
+                $login = $_GET['login'];
+                $mdp = $_GET['mdp'];
+                $user = getUsers($pdo, $login, $mdp);
+                $res = ["data" => $user];
+                echo json_encode($res);
+                http_response_code(201);
+            } else {
+                http_response_code(400);
+            }
             break;
 
         case 'POST':
@@ -42,7 +46,7 @@ try {
                 $id = $_GET['id_user'];
                 deleteUser($pdo, $id);
                 http_response_code(201);
-            }else{
+            } else {
                 http_response_code(400);
             }
             break;
