@@ -1,14 +1,11 @@
 <?php
 
 // Fonctions basiques
-function addAliment($pdo, $name)
+function addAliment($pdo, $name, $id_type)
 {
-    $stmt = $pdo->prepare("INSERT INTO aliments(nom) VALUES ('$name')");
+    $stmt = $pdo->prepare("INSERT INTO aliments(nom,id_type) VALUES ('$name','$id_type')");
     $stmt->execute();
 
-    // $id = $pdo->lastInsertId();
-
-    // echo '{ "id" : ' . $id . '}';
 }
 
 function getAliments($pdo)
@@ -27,12 +24,16 @@ function deleteAliments($pdo, $id)
     $request->execute();
 }
 
-function updateAliments($pdo, $id, $name)
+function updateAliments($pdo, $id, $name , $id_type)
 {
-    $sql = "UPDATE aliments SET nom = :name WHERE id = :id";
+    $sql = "UPDATE aliments 
+    SET nom = :name,
+    id_type = :id_type
+    WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':id_type', $id_type);
     $stmt->execute();
 }
 
