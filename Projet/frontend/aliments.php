@@ -5,10 +5,11 @@ session_start();
 if (isset($_SESSION['id']) == false) {
     header("Location: login.php");
     exit;
-}else{
+} else {
     $id = $_SESSION['id'];
 }
 ?>
+
 <body>
     <main>
         <header>
@@ -133,6 +134,7 @@ if (isset($_SESSION['id']) == false) {
                         dTable.row.add(alimentsData).draw(false);
                     });
                 }
+
             }
         </script>
     </main>

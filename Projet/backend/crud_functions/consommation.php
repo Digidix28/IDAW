@@ -5,18 +5,19 @@
 function getConsommation($pdo, $userId)
 {
 
-    $sql = "SELECT aliments.nom, SUM(consomme.quantité) AS total_quantite
+    $sql = "SELECT  aliments.nom, consomme.quantité, consomme.date_consommation, id_consomme
     FROM consomme
     INNER JOIN aliments ON consomme.id_alim = aliments.id
-    INNER JOIN users ON consomme.id_user = :userId
+    INNER JOIN users ON consomme.id_user = users.id_user
     WHERE users.id_user = :userId
-    GROUP BY aliments.nom;
+    ORDER BY consomme.date_consommation DESC;    
     ";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':userId', $userId);
     $stmt->execute();
     $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // $resultat['id_user'] = $userId;
     return $resultat;
 
 }
@@ -24,11 +25,10 @@ function getConsommation($pdo, $userId)
 function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
 {
     $sql = "SET FOREIGN_KEY_CHECKS=0;";
-
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
-    $sql = "INSERT INTO consomme
+    $sql = "INSERT INTO consomme(id_alim,id_user,quantité,date_consommation)
     VALUES(:idAliment,:idUser,:quantite,:dateConsommation);";
 
     $stmt = $pdo->prepare($sql);
@@ -38,16 +38,25 @@ function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
     $stmt->bindParam(':dateConsommation', $dateConsommation);
     $stmt->execute();
 
-    $sql = "SET FOREIGN_KEY_CHECKS=1;";
+    $lastInsertedId = $pdo->lastInsertId();
 
+    $sql = "SET FOREIGN_KEY_CHECKS=1;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
+
+    $sql = "SELECT * FROM consomme WHERE id_consomme = :lastInsertedId";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':lastInsertedId', $lastInsertedId);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function deleteConsommation($pdo,$idUser,$idAliment){
+
+function deleteConsommation($pdo,$idConsomme){
     
     $request = $pdo->prepare("DELETE FROM consomme 
-    WHERE id_user = $idUser AND id_alim = $idAliment");
+    WHERE id_consomme = $idConsomme");
     $request->execute();
 
 }

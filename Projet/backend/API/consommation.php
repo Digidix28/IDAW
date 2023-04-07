@@ -27,18 +27,19 @@ try {
                 $idAliment = $_POST['aliment_id'];
                 $quantite = $_POST['quantite'];
                 $dateConsommation = $_POST['date_consommation'];
-                addConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
+                $consommation = addConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
+                $res = ["data" => $consommation];
+                echo json_encode($res);
                 http_response_code(201);
             } else {
                 http_response_code(400);
             }
             break;
         case 'DELETE':
-            if (isset($_GET['user_id']) && isset($_GET['aliment_id'])) {
-                $idUser = $_GET['user_id'];
-                $idAliment = $_GET['aliment_id'];
-                deleteConsommation($pdo, $idUser, $idAliment);
-                http_response_code(201);
+            if (isset($_GET['id_consomme'])) {
+                $id_consomme = $_GET['id_consomme'];
+                deleteConsommation($pdo, $id_consomme);
+                http_response_code(200);
             } else {
                 http_response_code(400);
             }
