@@ -20,7 +20,7 @@ if (isset($_SESSION['id']) == false) {
                 ?>
             </div>
         </header>
-        <p> Inscrivez ce que vous consommez, afin de tenir un journal des plats que vous avez consommés</h2>
+        <h3> Inscrivez ce que vous consommez, afin de tenir un journal des plats que vous avez consommés</h3>
         <table class="table" id="myTable">
             <thead>
                 <tr>
@@ -33,7 +33,25 @@ if (isset($_SESSION['id']) == false) {
             <tbody id="consommationTableBody">
             </tbody>
         </table>
+        <h3> Ajoutez vos consommations journalières en cliquant sur l'aliment que vous avez mangé</h3>
+        <table class="table" id="myTable2">
+            <thead>
+                <tr>
+                    <th scope="col">nom</th>
+                    <th scope="col">id_type</th>
+                    <th scope="col">CRUD</th>
+                </tr>
+            </thead>
+            <tbody id="AlimentsTableBody">
+            </tbody>
+        </table>
         <form id="addConsommationForm" action="" onsubmit="onFormSubmit();">
+            <div class="form-group row">
+                <label for="inputHidden" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-3">
+                    <input type="hidden" class="form-control" id="inputHidden">
+                </div>
+            </div>
             <div class="form-group row">
                 <label for="inputAliment" class="col-sm-2 col-form-label">Aliment</label>
                 <div class="col-sm-3">
@@ -43,13 +61,13 @@ if (isset($_SESSION['id']) == false) {
             <div class="form-group row">
                 <label for="inputQuantite" class="col-sm-2 col-form-label">Quantité</label>
                 <div class="col-sm-3">
-                    <input type="email" class="form-control" id="inputQuantite">
+                    <input type="number" class="form-control" id="inputQuantite">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputDate" class="col-sm-2 col-form-label">Date de consommation</label>
                 <div class="col-sm-3">
-                    <input type="number" class="form-control" id="inputDate">
+                    <input type="date" class="form-control" id="inputDate">
                 </div>
             </div>
             <div class="form-group row">
@@ -59,10 +77,13 @@ if (isset($_SESSION['id']) == false) {
                 </div>
             </div>
         </form>
-        <script>
-            $(document).ready(function () {
-                // Your existing code here
 
+        <script>
+
+            // $(document).ready(function () {
+                // Your existing code here
+                var userId = <?php echo json_encode($id); ?>;
+                console.log(userId);
 
                 let dTable = $("#myTable").DataTable({
                     ajax: {
@@ -86,18 +107,14 @@ if (isset($_SESSION['id']) == false) {
                         $(row).find('.deleteBtn').attr('id', data.id_consomme);
                     }
 
-
                 });
 
 
 
-                $('#myTable tbody').on('click', '.deleteBtn', function () {
+                $('#myTable tbody').on('click', '.deleteBtn', function (event) {
 
                     var id_btn = $(event.target).attr('id');
                     var row = $(event.target)
-                    var userData = {
-                        'id': id_btn
-                    }
                     $.ajax({
                         type: 'DELETE',
                         url: `http://localhost/IDAW/Projet/backend/API/consommation.php?id_consomme=${id_btn}`,
@@ -110,8 +127,6 @@ if (isset($_SESSION['id']) == false) {
 
                 });
 
-                
-
 
 
                 var rowGlob;
@@ -120,7 +135,7 @@ if (isset($_SESSION['id']) == false) {
                 function onEdit() {
                     // get the row using the id
                     var id_btn = $(event.target).attr('id');
-                    var row = $(event.target)
+                    var row = $(event.target).parents("tr")
                     update = true;
                     // get the values of the cells in the row
                     let aliment = row.find('td:eq(0)').text();
@@ -133,7 +148,6 @@ if (isset($_SESSION['id']) == false) {
                     $('#inputAliment').val(nom);
                     $('#inputQuantite').val(prenom);
                     $('#inputDate').val(date);
-                 ;
 
                     // change the submit button to an update button
                     $('#submitBtn').text('Update');
@@ -145,11 +159,13 @@ if (isset($_SESSION['id']) == false) {
                     event.preventDefault();
 
                     var userData = {
-
+                        aliment_id: $("#inputHidden").val(),
+                        user_id: userId,
                         quantite: $("#inputQuantite").val(),
-                        date: $("#inputDate").val(),
+                        date_consommation: $("#inputDate").val(),
 
                     };
+                    console.log(userData);
 
                     $.ajax({
                         type: "POST",
@@ -158,13 +174,50 @@ if (isset($_SESSION['id']) == false) {
                         dataType: 'json'
 
                     }).always(function (response) {
-                        dTable.row.add(userData).draw(false);
+                        dTable.row.add(userData).draw();
                     });
                 }
 
 
-            });
 
+
+                // Gestion de la dataTable des aliments ///////////////////////////////////////////////////////
+
+                let dTable2 = $("#myTable2").DataTable({
+                    ajax: {
+                        url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                        dataSrc: 'data'
+                    },
+                    columns: [
+                        { data: 'nom' },
+                        { data: 'id_type' },
+                        {
+                            targets: -1,
+                            data: null,
+                            defaultContent: "<td><button class='consommeBtn'>Consommer</button></td>",
+                        },
+                    ],
+                    createdRow: function (row, data, dataIndex) {
+                        // Set the id of the edit button to the "id" key in the data
+                        $(row).find('.consommeBtn').attr('id', data.id);
+                    }
+                });
+
+                $('#myTable2 tbody').on('click', '.consommeBtn', function (event) {
+
+                    var id_aliment = $(event.target).attr('id');
+                    var row = $(event.target).parents('tr')
+
+                    let aliment = row.find('td:eq(0)').text();
+
+                    console.log("on est entré dans la fonction")
+                    console.log(id_aliment)
+
+                    $('#inputAliment').val(aliment);
+                    $('#inputHidden').val(id_aliment);
+
+                });
+            // });
         </script>
 
 

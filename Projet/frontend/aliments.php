@@ -5,10 +5,11 @@ session_start();
 if (isset($_SESSION['id']) == false) {
     header("Location: login.php");
     exit;
-}else{
+} else {
     $id = $_SESSION['id'];
 }
 ?>
+
 <body>
     <main>
         <header>
@@ -53,92 +54,92 @@ if (isset($_SESSION['id']) == false) {
 
         <script>
 
-                let dTable = $("#myTable").DataTable({
-                    ajax: {
-                        url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
-                        dataSrc: 'data'
+            let dTable = $("#myTable").DataTable({
+                ajax: {
+                    url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                    dataSrc: 'data'
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'nom' },
+                    { data: 'id_type' },
+                    {
+                        targets: -1,
+                        data: null,
+                        defaultContent: "<td><button class='editBtn'>Edit</button></td><td><button class='deleteBtn'>Delete</button></td>",
                     },
-                    columns: [
-                        { data: 'id' },
-                        { data: 'nom' },
-                        { data: 'id_type' },
-                        {
-                            targets: -1,
-                            data: null,
-                            defaultContent: "<td><button class='editBtn'>Edit</button></td><td><button class='deleteBtn'>Delete</button></td>",
-                        },
-                    ],
-                    createdRow: function (row, data, dataIndex) {
-                        // Set the id of the edit button to the "id" key in the data
-                        $(row).find('.editBtn').attr('id', data.id);
-                        $(row).find('.deleteBtn').attr('id', data.id);
-                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    // Set the id of the edit button to the "id" key in the data
+                    $(row).find('.editBtn').attr('id', data.id);
+                    $(row).find('.deleteBtn').attr('id', data.id);
+                }
+            });
+
+            id = 0;
+
+            $('#myTable tbody').on('click', '.deleteBtn', function () {
+                var id_btn = $(event.target).attr('id');
+                var row = $(event.target)
+                var userData = {
+                    'id': id_btn
+                }
+                $.ajax({
+                    type: 'DELETE',
+                    url: `http://localhost/projet/IDAW/Projet/backend/API/aliments.php?id=${id_btn}`,
+                    dataType: 'json',
+                }).done(function () {
+                    dTable
+                        .row($(row).parents('tr'))
+                        .remove()
+                        .draw();
                 });
+            });
 
-                id = 0;
+            var rowGlob;
+            var update = false;
 
-                $('#myTable tbody').on('click', '.deleteBtn', function () {
-                    var id_btn = $(event.target).attr('id');
-                    var row = $(event.target)
-                    var userData = {
-                        'id': id_btn
-                    }
-                    $.ajax({
-                        type: 'DELETE',
-                        url: `http://localhost/projet/IDAW/Projet/backend/API/aliments.php?id=${id_btn}`,
-                        dataType: 'json',
-                    }).done(function () {
-                        dTable
-                            .row($(row).parents('tr'))
-                            .remove()
-                            .draw();
-                    });
-                }); 
+            function onEdit(id) {
+                // get the row using the id
+                let row = $('#' + id);
+                rowGlob = row;
+                update = true;
+                // get the values of the cells in the row
+                let nom = row.find('td:eq(0)').text();
+                let id_type = row.find('td:eq(1)').text();
 
-                var rowGlob;
-                var update = false;
+                // populate the form with the row data
+                // On met .val pour accéder à des valeurs, par exemple aux valeurs du formulaire. Le .text permet d'accéder au texte de la balise.
+                $('#inputNom').val(nom);
+                $('#inputType').val(id_type);
 
-                function onEdit(id) {
-                    // get the row using the id
-                    let row = $('#' + id);
-                    rowGlob = row;
-                    update = true;
-                    // get the values of the cells in the row
-                    let nom = row.find('td:eq(0)').text();
-                    let id_type = row.find('td:eq(1)').text();
-
-                    // populate the form with the row data
-                    // On met .val pour accéder à des valeurs, par exemple aux valeurs du formulaire. Le .text permet d'accéder au texte de la balise.
-                    $('#inputNom').val(nom);
-                    $('#inputType').val(id_type);
-
-                    // change the submit button to an update button
-                    $('#submitBtn').text('Update');
-                    // $('#addStudentForm').attr('onsubmit', 'onUpdate(${id});');
-                }
+                // change the submit button to an update button
+                $('#submitBtn').text('Update');
+                // $('#addStudentForm').attr('onsubmit', 'onUpdate(${id});');
+            }
 
 
-                function onFormSubmit() {
-                    // prevent the form to be sent to the server
-                    event.preventDefault();
-                    let nom = $("#inputNom").val();
-                    let id_type = $("#inputType").val();
-                    var alimentsData = {
-                        nom: $("#inputNom").val(),
-                        id_type: $("#inputType").val()
-                    };
-                    console.log(alimentsData)
+            function onFormSubmit() {
+                // prevent the form to be sent to the server
+                event.preventDefault();
+                let nom = $("#inputNom").val();
+                let id_type = $("#inputType").val();
+                var alimentsData = {
+                    nom: $("#inputNom").val(),
+                    id_type: $("#inputType").val()
+                };
+                console.log(alimentsData)
 
-                    $.ajax({
-                        type: "POST",
-                        url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
-                        data: alimentsData,
-                        dataType: 'json'
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
+                    data: alimentsData,
+                    dataType: 'json'
 
-                    }).done(function (response) {
-                        dTable.row.add(alimentsData).draw(false);
-                    });
-                }
+                }).done(function (response) {
+                    dTable.row.add(alimentsData).draw(false);
+                });
+            }
         </script>
     </main>
 </body>

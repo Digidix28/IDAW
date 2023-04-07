@@ -27,7 +27,9 @@ try {
                 $idAliment = $_POST['aliment_id'];
                 $quantite = $_POST['quantite'];
                 $dateConsommation = $_POST['date_consommation'];
-                addConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
+                $consommation = addConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
+                $res = ["data" => $consommation];
+                echo json_encode($res);
                 http_response_code(201);
             } else {
                 http_response_code(400);
