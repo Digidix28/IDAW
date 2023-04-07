@@ -54,7 +54,7 @@ if (isset($_SESSION['id']) == false) {
         <script>
             let dTable = $("#myTable").DataTable({
                 ajax: {
-                    url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
+                    url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
                     dataSrc: 'data'
                 },
                 columns: [
@@ -80,7 +80,7 @@ if (isset($_SESSION['id']) == false) {
                 var row = $(event.target);
                 $.ajax({
                     type: 'DELETE',
-                    url: `http://localhost/projet/IDAW/Projet/backend/API/aliments.php?id=${id_btn}`,
+                    url: `http://localhost/IDAW/Projet/backend/API/aliments.php?id=${id_btn}`,
                     dataType: 'json',
                 }).always(function () {
                     dTable
@@ -112,7 +112,7 @@ if (isset($_SESSION['id']) == false) {
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
+                        url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
                         data: alimentsData,
                         dataType: 'json'
                     }).always(function (response) {
@@ -127,7 +127,7 @@ if (isset($_SESSION['id']) == false) {
                     };
                     $.ajax({
                         type: "put",
-                        url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
+                        url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
                         data: alimentsData,
                         dataType: 'json'
                     }).always(function (response) {

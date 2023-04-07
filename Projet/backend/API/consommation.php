@@ -47,18 +47,13 @@ try {
         case 'PUT':
             $json = file_get_contents('php://input');
             $put = json_decode($json, TRUE);
-            $idUser = $put['user_id'];
-            $idAliment = $put['aliment_id'];
+            $id_consomme = $put['id_consomme'];
             $quantite = $put['quantite'];
             $dateConsommation = $put['date_consommation'];
 
-            if (isset($idUser) && isset($idAliment)) {
-                updateConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation);
-                echo "idUser: " . $idUser . "\n";
-                echo "idAliment: " . $idAliment . "\n";
-                echo "quantite: " . $quantite . "\n";
-                echo "dateConsommation: " . $dateConsommation . "\n";
-                http_response_code(201);
+            if (isset($id_consomme)) {
+                updateConsommation($pdo, $id_consomme, $quantite, $dateConsommation);
+                http_response_code(200);
 
             } else {
                 http_response_code(400);

@@ -15,6 +15,13 @@ function getUsers($pdo, $login, $mdp)
     $user_data = $user_exists ? $resultat[0] : null;
     return ['user_exists' => $user_exists, 'user_data' => $user_data];
 }
+function getUserswithid($pdo, $id)
+{
+    $request = $pdo->prepare("SELECT * FROM users WHERE id_user = :id_user ");
+    $request->execute(['id_user' => $id]);
+    $resultat = $request->fetchAll(PDO::FETCH_ASSOC);
+    return $resultat ;
+}
 
 function deleteUser($pdo, $id)
 {
