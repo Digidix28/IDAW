@@ -77,7 +77,6 @@ require_once("templates/template_header.php");
             console.dir(userData);
 
             $.ajax({
-
                 type: "POST",
                 url: "http://localhost/IDAW/Projet/backend/API/users.php",
                 data: userData,
