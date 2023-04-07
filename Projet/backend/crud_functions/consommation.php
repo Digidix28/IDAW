@@ -25,7 +25,6 @@ function getConsommation($pdo, $userId)
 function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
 {
     $sql = "SET FOREIGN_KEY_CHECKS=0;";
-
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
@@ -39,11 +38,20 @@ function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
     $stmt->bindParam(':dateConsommation', $dateConsommation);
     $stmt->execute();
 
-    $sql = "SET FOREIGN_KEY_CHECKS=1;";
+    $lastInsertedId = $pdo->lastInsertId();
 
+    $sql = "SET FOREIGN_KEY_CHECKS=1;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
+
+    $sql = "SELECT * FROM consomme WHERE id_consomme = :lastInsertedId";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':lastInsertedId', $lastInsertedId);
+    $stmt->execute();
+
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
 
 function deleteConsommation($pdo,$idConsomme){
     
