@@ -81,91 +81,109 @@ if (isset($_SESSION['id']) == false) {
         <script>
 
             // $(document).ready(function () {
-                // Your existing code here
-                var userId = <?php echo json_encode($id); ?>;
-                console.log(userId);
 
-                let dTable = $("#myTable").DataTable({
-                    ajax: {
-                        type: 'GET',
-                        url: `http://localhost/IDAW/Projet/backend/API/consommation.php?user_id=31`,
-                        dataSrc: 'data'
+            var userId = <?php echo json_encode($id); ?>;
+            let dTable = $("#myTable").DataTable({
+                ajax: {
+                    type: 'GET',
+                    url: `http://localhost/IDAW/Projet/backend/API/consommation.php?user_id=31`,
+                    dataSrc: 'data'
+                },
+                columns: [
+                    { data: 'nom' },
+                    { data: 'quantité' },
+                    { data: 'date_consommation' },
+                    {
+                        targets: -1,
+                        data: null,
+                        defaultContent: "<td><button class='editBtn' >Edit</button></td><td><button class='deleteBtn'>Delete</button></td>",
                     },
-                    columns: [
-                        { data: 'nom' },
-                        { data: 'quantité' },
-                        { data: 'date_consommation' },
-                        {
-                            targets: -1,
-                            data: null,
-                            defaultContent: "<td><button class='editBtn'>Edit</button></td><td><button class='deleteBtn'>Delete</button></td>",
-                        },
-                    ],
-                    createdRow: function (row, data, dataIndex) {
-                        // Set the id of the edit button to the "id" key in the data
-                        $(row).find('.editBtn').attr('id', data.id_consomme);
-                        $(row).find('.deleteBtn').attr('id', data.id_consomme);
-                    }
-
-                });
-
-
-
-                $('#myTable tbody').on('click', '.deleteBtn', function (event) {
-
-                    var id_btn = $(event.target).attr('id');
-                    var row = $(event.target)
-                    $.ajax({
-                        type: 'DELETE',
-                        url: `http://localhost/IDAW/Projet/backend/API/consommation.php?id_consomme=${id_btn}`,
-                        dataType: 'json',
-                    }).always(function (response) {
-                        console.log("on est entré dans le done");
-                        dTable.row($(row).parents('tr')).remove().draw(true);
-                        console.log("on est à la fin du done");
-                    })
-
-                });
-
-
-
-                var rowGlob;
-                var update = false;
-
-                function onEdit() {
-                    // get the row using the id
-                    var id_btn = $(event.target).attr('id');
-                    var row = $(event.target).parents("tr")
-                    update = true;
-                    // get the values of the cells in the row
-                    let aliment = row.find('td:eq(0)').text();
-                    let quantite = row.find('td:eq(1)').text();
-                    let date = row.find('td:eq(2)').text();
-
-
-                    // populate the form with the row data
-                    // On met .val pour accéder à des valeurs, par exemple aux valeurs du formulaire. Le .text permet d'accéder au texte de la balise.
-                    $('#inputAliment').val(nom);
-                    $('#inputQuantite').val(prenom);
-                    $('#inputDate').val(date);
-
-                    // change the submit button to an update button
-                    $('#submitBtn').text('Update');
-                    // $('#addConsommationForm').attr('onsubmit', 'onUpdate(${id});');
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    // Set the id of the edit button to the "id" key in the data
+                    $(row).find('.editBtn').attr('id', data.id_consomme);
+                    $(row).find('.deleteBtn').attr('id', data.id_consomme);
                 }
 
-                function onFormSubmit() {
-                    // prevent the form to be sent to the server
-                    event.preventDefault();
+            });
 
+
+
+            $('#myTable tbody').on('click', '.deleteBtn', function (event) {
+
+                var id_btn = $(event.target).attr('id');
+                var row = $(event.target)
+                $.ajax({
+                    type: 'DELETE',
+                    url: `http://localhost/IDAW/Projet/backend/API/consommation.php?id_consomme=${id_btn}`,
+                    dataType: 'json',
+                }).always(function (response) {
+                    dTable.row($(row).parents('tr')).remove().draw(true);
+                })
+
+            });
+
+
+
+            var rowGlob;
+            var update = false;
+
+            $('#myTable tbody').on('click', '.editBtn', function (event) {
+                // get the row using the id
+                var id_consomme = $(event.target).attr('id');
+                var row = $(event.target).parents("tr")
+                update = true;
+                // get the values of the cells in the row
+                let aliment = row.find('td:eq(0)').text();
+                let quantite = row.find('td:eq(1)').text();
+                let date = row.find('td:eq(2)').text();
+
+                console.log("on est entré dans le edit")
+                // populate the form with the row data
+                // On met .val pour accéder à des valeurs, par exemple aux valeurs du formulaire. Le .text permet d'accéder au texte de la balise.
+                $('#inputAliment').val(aliment);
+                $('#inputQuantite').val(quantite);
+                $('#inputDate').val(date);
+                $('#inputHidden').val(id_consomme);
+
+                // change the submit button to an update button
+                $('#submitBtn').text('Update');
+                // $('#addConsommationForm').attr('onsubmit', 'onUpdate(${id});');
+
+            });
+
+            function onFormSubmit() {
+                // prevent the form to be sent to the server
+                event.preventDefault();
+
+                if (update) {
                     var userData = {
+
+                        id_consomme: $("#inputHidden").val(),
+                        quantite: $("#inputQuantite").val(),
+                        date_consommation: $("#inputDate").val(),
+
+                    };
+                    console.log(userData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "http://localhost/IDAW/Projet/backend/API/consommation.php",
+                        data: userData,
+                        dataType: 'json'
+
+                    }).always(function (response) {
+                        dTable.row.add(response.data).draw(false);
+                    });
+                } else {
+                    var userData = {
+
                         aliment_id: $("#inputHidden").val(),
                         user_id: userId,
                         quantite: $("#inputQuantite").val(),
                         date_consommation: $("#inputDate").val(),
 
                     };
-                    console.log(userData);
 
                     $.ajax({
                         type: "POST",
@@ -174,49 +192,48 @@ if (isset($_SESSION['id']) == false) {
                         dataType: 'json'
 
                     }).always(function (response) {
-                        dTable.row.add(userData).draw();
+                        dTable.row.add(response.data).draw(false);
                     });
                 }
 
 
+            }
 
 
-                // Gestion de la dataTable des aliments ///////////////////////////////////////////////////////
 
-                let dTable2 = $("#myTable2").DataTable({
-                    ajax: {
-                        url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
-                        dataSrc: 'data'
+            // Gestion de la dataTable des aliments ///////////////////////////////////////////////////////
+
+            let dTable2 = $("#myTable2").DataTable({
+                ajax: {
+                    url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                    dataSrc: 'data'
+                },
+                columns: [
+                    { data: 'nom' },
+                    { data: 'id_type' },
+                    {
+                        targets: -1,
+                        data: null,
+                        defaultContent: "<td><button class='consommeBtn'>Consommer</button></td>",
                     },
-                    columns: [
-                        { data: 'nom' },
-                        { data: 'id_type' },
-                        {
-                            targets: -1,
-                            data: null,
-                            defaultContent: "<td><button class='consommeBtn'>Consommer</button></td>",
-                        },
-                    ],
-                    createdRow: function (row, data, dataIndex) {
-                        // Set the id of the edit button to the "id" key in the data
-                        $(row).find('.consommeBtn').attr('id', data.id);
-                    }
-                });
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    // Set the id of the edit button to the "id" key in the data
+                    $(row).find('.consommeBtn').attr('id', data.id);
+                }
+            });
 
-                $('#myTable2 tbody').on('click', '.consommeBtn', function (event) {
+            $('#myTable2 tbody').on('click', '.consommeBtn', function (event) {
 
-                    var id_aliment = $(event.target).attr('id');
-                    var row = $(event.target).parents('tr')
+                var id_aliment = $(event.target).attr('id');
+                var row = $(event.target).parents('tr')
 
-                    let aliment = row.find('td:eq(0)').text();
+                let aliment = row.find('td:eq(0)').text();
 
-                    console.log("on est entré dans la fonction")
-                    console.log(id_aliment)
+                $('#inputAliment').val(aliment);
+                $('#inputHidden').val(id_aliment);
 
-                    $('#inputAliment').val(aliment);
-                    $('#inputHidden').val(id_aliment);
-
-                });
+            });
             // });
         </script>
 

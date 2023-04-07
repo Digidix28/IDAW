@@ -44,7 +44,11 @@ function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
-    $sql = "SELECT * FROM consomme WHERE id_consomme = :lastInsertedId";
+    $sql = "SELECT  aliments.nom, consomme.quantité, consomme.date_consommation, id_consomme
+    FROM consomme
+    INNER JOIN aliments ON consomme.id_alim = aliments.id
+    INNER JOIN users ON consomme.id_user = users.id_user
+    WHERE consomme.id_consomme = :lastInsertedId";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':lastInsertedId', $lastInsertedId);
     $stmt->execute();
@@ -61,15 +65,14 @@ function deleteConsommation($pdo,$idConsomme){
 
 }
 
-function updateConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation){
+function updateConsommation($pdo,$id_consomme,$quantite,$dateConsommation){
     
     $sql = "UPDATE consomme 
     SET quantité = :quantite, date_consommation = :dateConsommation 
-    WHERE id_user = :idUser AND id_alim = :idAliment";
+    WHERE id_consomme = :id_consomme AND id_alim = :idAliment";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':idUser', $idUser);
-    $stmt->bindParam(':idAliment', $idAliment);
+    $stmt->bindParam(':idUser', $id_consomme);
     $stmt->bindParam(':quantite', $quantite);
     $stmt->bindParam(':dateConsommation', $dateConsommation);
     $stmt->execute();

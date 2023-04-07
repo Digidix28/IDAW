@@ -77,7 +77,6 @@ require_once("templates/template_header.php");
             console.dir(userData);
 
             $.ajax({
-
                 type: "POST",
                 url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
                 data: userData,
@@ -86,6 +85,7 @@ require_once("templates/template_header.php");
             }).done(function (response) {
                 id_user = response.data.user_data.id_user;
                 window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+
 
             });
         }
