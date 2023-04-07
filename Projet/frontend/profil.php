@@ -55,7 +55,7 @@ require_once("templates/template_header.php");
             url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
             type: "GET",
             data: {
-                user_id: "2", // Replace with the actual user ID you want to retrieve
+                user_id: "2", 
                 fields: "login,nom,prenom,sexe,age,mdp" // Specify the fields you want to retrieve, separated by commas
             },
             success: function (response) {
