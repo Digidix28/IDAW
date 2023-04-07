@@ -24,15 +24,15 @@ function deleteAliments($pdo, $id)
     $request->execute();
 }
 
-function updateAliments($pdo, $id, $name , $id_type)
+function updateAliments($pdo, $id, $nom , $id_type)
 {
     $sql = "UPDATE aliments 
-    SET nom = :name,
+    SET nom = :nom,
     id_type = :id_type
     WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':name', $nom);
     $stmt->bindParam(':id_type', $id_type);
     $stmt->execute();
 }
