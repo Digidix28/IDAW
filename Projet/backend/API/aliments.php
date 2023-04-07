@@ -28,9 +28,10 @@ try {
             $json = file_get_contents('php://input');
             $put = json_decode($json, TRUE);
             $id = $put['id'];
-            $name = $put['name'];
-            if(isset($id) && isset($name)){
-                updateAliments($pdo, $id, $name ,$id_type );
+            $nom = $put['nom'];
+            $id_type = $put['id_type'];
+            if(isset($id) && isset($nom)&& isset($id_type)){
+                updateAliments($pdo, $id, $nom ,$id_type );
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);
