@@ -78,13 +78,14 @@ require_once("templates/template_header.php");
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/IDAW/Projet/backend/API/users.php",
+                url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
                 data: userData,
                 dataType: 'json'
 
             }).done(function (response) {
                 id_user = response.data.user_data.id_user;
-                window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+                window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+
 
             });
         }
@@ -105,7 +106,7 @@ require_once("templates/template_header.php");
 
             $.ajax({
                 type: "GET",
-                url: "http://localhost/IDAW/Projet/backend/API/users.php",
+                url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
                 data: userData,
                 dataType: 'json'
 
@@ -118,18 +119,10 @@ require_once("templates/template_header.php");
                 if (isConnected) {
 
                     
-                    window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${id_user}`);
+                    window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${id_user}`);
 
                 } else {
 
                 }
             });
         }
-
-
-
-    </script>
-
-</body>
-
-</html>
