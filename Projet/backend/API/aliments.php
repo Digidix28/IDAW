@@ -15,9 +15,10 @@ try {
             echo json_encode($res);
             break;
         case 'POST':
-            if (isset($_POST['name'])) {
-                $name = $_POST['name'];
-                addAliment($pdo, $name);
+            if (isset($_POST['nom'])&&isset($_POST['id_type'])) {
+                $name = $_POST['nom'];
+                $id_type = $_POST['id_type'];
+                addAliment($pdo, $name,$id_type );
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);
@@ -29,7 +30,7 @@ try {
             $id = $put['id'];
             $name = $put['name'];
             if(isset($id) && isset($name)){
-                updateAliments($pdo, $id, $name);
+                updateAliments($pdo, $id, $name ,$id_type );
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);
