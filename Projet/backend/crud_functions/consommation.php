@@ -5,18 +5,19 @@
 function getConsommation($pdo, $userId)
 {
 
-    $sql = "SELECT aliments.nom, SUM(consomme.quantité) AS total_quantite
+    $sql = "SELECT  aliments.nom, consomme.quantité, consomme.date_consommation, id_consomme
     FROM consomme
     INNER JOIN aliments ON consomme.id_alim = aliments.id
-    INNER JOIN users ON consomme.id_user = :userId
+    INNER JOIN users ON consomme.id_user = users.id_user
     WHERE users.id_user = :userId
-    GROUP BY aliments.nom;
+    ORDER BY consomme.date_consommation DESC;    
     ";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':userId', $userId);
     $stmt->execute();
     $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // $resultat['id_user'] = $userId;
     return $resultat;
 
 }
@@ -28,7 +29,7 @@ function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
-    $sql = "INSERT INTO consomme
+    $sql = "INSERT INTO consomme(id_alim,id_user,quantité,date_consommation)
     VALUES(:idAliment,:idUser,:quantite,:dateConsommation);";
 
     $stmt = $pdo->prepare($sql);
@@ -44,10 +45,10 @@ function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
     $stmt->execute();
 }
 
-function deleteConsommation($pdo,$idUser,$idAliment){
+function deleteConsommation($pdo,$idConsomme){
     
     $request = $pdo->prepare("DELETE FROM consomme 
-    WHERE id_user = $idUser AND id_alim = $idAliment");
+    WHERE id_consomme = $idConsomme");
     $request->execute();
 
 }

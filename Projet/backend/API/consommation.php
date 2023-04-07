@@ -34,11 +34,10 @@ try {
             }
             break;
         case 'DELETE':
-            if (isset($_GET['user_id']) && isset($_GET['aliment_id'])) {
-                $idUser = $_GET['user_id'];
-                $idAliment = $_GET['aliment_id'];
-                deleteConsommation($pdo, $idUser, $idAliment);
-                http_response_code(201);
+            if (isset($_GET['id_consomme'])) {
+                $id_consomme = $_GET['id_consomme'];
+                deleteConsommation($pdo, $id_consomme);
+                http_response_code(200);
             } else {
                 http_response_code(400);
             }

@@ -53,7 +53,7 @@ if (isset($_SESSION['id']) == false) {
         <script>
             let dTable = $("#myTable").DataTable({
                 ajax: {
-                    url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
+                    url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
                     dataSrc: 'data'
                 },
                 columns: [
