@@ -103,41 +103,29 @@
 
 
 
-        id = 0;
-        $('#myTable tbody').on('click', 'deleteBtn', function () {
+        $(document).ready(function () {
+            $('#myTable tbody').on('click', 'deleteBtn', function () {
 
-            var id_btn = $(event.target).attr('id');
-            var userData = {
-                'id': id_btn
-            }
-            $.ajax({
-                type: 'DELETE',
-                url: `http://localhost/IDAW/TP5/exo2/backend/users.php?id=${id_btn}`,
-                dataType: 'json',
-            }).done(function () {
-                dTable
-                    .row($(this).parents('tr'))
-                    .remove()
-                    .draw();
+                var id_btn = $(event.target).attr('id');
+                var userData = {
+                    'id': id_btn
+                }
+                $.ajax({
+                    type: 'DELETE',
+                    url: `http://localhost/IDAW/TP5/exo2/backend/users.php?id=${id_btn}`,
+                    dataType: 'json',
+                }).done(function () {
+                    dTable
+                        .row($(this).parents('tr'))
+                        .remove()
+                        .draw();
+                });
+
+
             });
-
-
         });
 
-        // function onDelete() {
-        //     var id_btn = $(event.target).attr('id');
-        //     var userData = {
-        //         'id': id_btn
-        //     }
-        //     $.ajax({
-        //         type: 'DELETE',
-        //         url: `http://localhost/IDAW/TP5/exo2/backend/users.php?id=${id_btn}`,
-        //         dataType: 'json',
-        //     }).done(function (resp) {
-        //         console.log(resp);
-        //         let e = $('#'+id_btn).parents('tr');
-        //         dTable.row(e).remove().draw();
-        //     });
+
 
 
         var rowGlob;

@@ -52,6 +52,7 @@ if (isset($_SESSION['id']) == false) {
         </form>
 
         <script>
+
                 let dTable = $("#myTable").DataTable({
                     ajax: {
                         url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
