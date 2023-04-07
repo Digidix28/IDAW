@@ -84,7 +84,7 @@ require_once("templates/template_header.php");
                 dataType: 'json'
 
             }).done(function (response) {
-                id_user = response.data.id_user
+                id_user = response.data.user_data.id_user;
                 window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${userData.login}`);
 
             });
@@ -113,7 +113,7 @@ require_once("templates/template_header.php");
             }).done(function (response) {
 
                 var isConnected = response.data.user_exists;
-                id_user = response.data.id_user
+                id_user = response.data.user_data.id_user;
                 console.log(isConnected);
 
                 if (isConnected) {

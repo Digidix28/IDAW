@@ -18,7 +18,14 @@ try {
                 $res = ["data" => $user];
                 echo json_encode($res);
                 http_response_code(201);
-            } else {
+            }
+            elseif (isset($_GET['id_user'])){
+                $id_user = $_GET['id_user'];
+                $user = getUserswithid($pdo, $id_user);
+                $res = ["data" => $user];
+                echo json_encode($res);
+                http_response_code(201);
+            }else{
                 http_response_code(400);
             }
             break;
