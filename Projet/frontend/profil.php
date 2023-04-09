@@ -1,5 +1,15 @@
 <?php
 require_once("templates/template_header.php");
+session_start();
+if (isset($_SESSION['id']) == false) {
+    header("Location: login.php");
+    exit;
+} else {
+    $id = $_SESSION['id'];
+}
+
+?>
+
 
 session_start();
 if (isset($_SESSION['id']) == false) {
@@ -20,65 +30,107 @@ if (isset($_SESSION['id']) == false) {
             ?>
         </header>
         <p> bienvenue sur votre page de profil </p>
-        <h2>My Profil</h2>
-        <div id="profil-form">
-            <form>
-                <h2>My Profil</h2>
-                <div class="form-group">
-                    <label for="nom">Nom :</label>
-                    <input type="text" class="form-control" id="nom" name="nom">
+
+        <form id="profil-form" action="" onsubmit="onSubmit();">
+            <h2>My Profil</h2>
+            <div class="form-group row">
+                <label for="inputHidden" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-3">
+                    <input type="hidden" class="form-control" id="inputHidden">
                 </div>
-                <div class="form-group">
-                    <label for="prenom">Prénom :</label>
-                    <input type="text" class="form-control" id="prenom" name="prenom">
-                </div>
-                <div class="form-group">
-                    <label for="login">Email :</label>
-                    <input type="email" class="form-control" id="login" name="login">
-                </div>
-                <div class="form-group">
-                    <label for="sexe">Sexe :</label>
-                    <select class="form-control" id="sexe" name="sexe">
-                        <option value="0">Homme</option>
-                        <option value="1">Femme</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="age">Âge :</label>
-                    <input type="number" class="form-control" id="age" name="age">
-                </div>
-                <div class="form-group">
-                    <label for="mdp">Mot de passe :</label>
-                    <input type="password" class="form-control" id="mdp" name="mdp">
-                </div>
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
-            </form>
+            </div>
+            <div class="form-group">
+                <label for="email">Email :</label>
+                <input type="email" id="login" name="login" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="mdp" name="mdp" required>
+            </div>
+            <div class="form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" required>
+            </div>
+            <div class="form-group">
+                <label for="sexe">Sexe :</label>
+                <input type="number" id="sexe" name="sexe" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age :</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="poid">Poids :</label>
+                <input type="number" id="poids" name="poids" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="modifier">
+            </div>
+        </form>
+
         </div>
     </main>
     <script>
         var userId = <?php echo json_encode($id); ?>;
-        $(document).ready(function () {
-            $.ajax({
-                url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
-                type: "GET",
-                data: {
-                    id_user: userId,
-                    fields: "nom,prenom,login,sexe,age,mdp"
-                },
-                success: function (response) {
-                    var userData = response.data.user_data;
-                    $('#nom').val(userData.nom);
-                    $('#prenom').val(userData.prenom);
-                    $('#login').val(userData.login);
-                    $('#sexe').val(userData.sexe);
-                    $('#age').val(userData.age);
-                    $('#mdp').val(userData.mdp);
-                },
-                error: function (xhr, status, error) {
-                    console.log(error); 
-                }
-            });
+        $.ajax({
+            type: "GET",
+            url: `http://localhost/IDAW/Projet/backend/API/users.php?id_user=${userId}`,
+            method: "GET",
+
+        }).done(function (response) {
+            console.log(response);
+            $("#inputHidden").val(userId);
+            $("#login").val(response.data['0'].login);
+            $("#mdp").val(response.data['0'].mdp);
+            $("#nom").val(response.data['0'].nom);
+            $("#prenom").val(response.data['0'].prenom);
+            $("#sexe").val(response.data['0'].sexe);
+            $("#age").val(response.data['0'].age);
+            $("#poids").val(response.data['0'].poid);
         });
+
+        function onSubmit() {
+            event.preventDefault();
+            var userData = {
+                id_user: $("#inputHidden").val(),
+                login: $("#login").val(),
+                mdp: $("#mdp").val(),
+                nom: $("#nom").val(),
+                prenom: $("#prenom").val(),
+                sexe: $("#sexe").val(),
+                age: $("#age").val(),
+                poid: $("#poids").val(),
+            };
+
+            console.log(userData);
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost/IDAW/Projet/backend/API/users.php",
+                async: false,
+                method: "PUT",
+                dataType: "json",
+                data: JSON.stringify(userData),
+
+            }).always(function (response) {
+                
+                $("#inputHidden").val(userId);
+                $("#login").val(userData.login);
+                $("#mdp").val(userData.mdp);
+                $("#nom").val(userData.nom);
+                $("#prenom").val(userData.prenom);
+                $("#sexe").val(userData.sexe);
+                $("#age").val(userData.age);
+                $("#poids").val(userData.poid);
+            });
+
+
+        }
+
 
 
     </script>

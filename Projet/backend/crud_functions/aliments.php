@@ -32,9 +32,17 @@ function updateAliments($pdo, $id, $nom , $id_type)
     WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':name', $nom);
+    $stmt->bindParam(':nom', $nom);
     $stmt->bindParam(':id_type', $id_type);
     $stmt->execute();
+
+    $request = $pdo->prepare("SELECT * from aliments 
+    WHERE aliments.id = :id");
+    $request->bindParam(':id', $id);
+    $request->execute();
+
+    $resultat = $request->fetchAll(PDO::FETCH_ASSOC);
+    return $resultat;
 }
 
 ?>

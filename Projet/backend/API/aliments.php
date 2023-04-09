@@ -31,7 +31,9 @@ try {
             $nom = $put['nom'];
             $id_type = $put['id_type'];
             if(isset($id) && isset($nom)&& isset($id_type)){
-                updateAliments($pdo, $id, $nom ,$id_type );
+                $updatedAliment = updateAliments($pdo, $id, $nom ,$id_type );
+                $res = ["data" => $updatedAliment];
+                echo json_encode($res);
                 http_response_code(201); // set HTTP status code to 201
             } else {
                 http_response_code(400);

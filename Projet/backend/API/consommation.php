@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 header('Content-Type: application/json; charset=utf-8');
 require_once("../crud_functions/consommation.php");
 require_once("config.php");
@@ -52,7 +54,9 @@ try {
             $dateConsommation = $put['date_consommation'];
 
             if (isset($id_consomme)) {
-                updateConsommation($pdo, $id_consomme, $quantite, $dateConsommation);
+                $consommation = updateConsommation($pdo, $id_consomme, $quantite, $dateConsommation);
+                $res = ["data" => $consommation];
+                echo json_encode($res);
                 http_response_code(200);
 
             } else {
