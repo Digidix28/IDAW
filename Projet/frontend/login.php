@@ -57,7 +57,8 @@ require_once("templates/template_header.php");
 
 
     <script>
-
+        let API_URL_BASE = "<?php echo $API_URL_BASE ?>";
+        let WINDOW_URL_BASE = "<?php echo $WINDOW_URL_BASE ?>";
         function onSignUpFormSubmit() {
 
             event.preventDefault();
@@ -78,13 +79,13 @@ require_once("templates/template_header.php");
             $.ajax({
 
                 type: "POST",
-                url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
+                url: API_URL_BASE + '/users.php',
                 data: userData,
                 dataType: 'json'
 
             }).done(function (response) {
                 id_user = response.data.user_data.id_user;
-                window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+                window.location.replace( WINDOW_URL_BASE + `/index.php?id=${userData.login}`);
 
             });
         }
@@ -103,7 +104,7 @@ require_once("templates/template_header.php");
 
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
+                    url: API_URL_BASE + '/users.php',
                     data: userData,
                     dataType: 'json'
 
@@ -114,7 +115,7 @@ require_once("templates/template_header.php");
                     console.log(isConnected);
 
                     if (isConnected) {
-                        window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${id_user}`);
+                        window.location.replace( WINDOW_URL_BASE + `/index.php?id=${id_user}`);
 
                     } else {
                         console.log("dans le else");

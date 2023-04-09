@@ -1,12 +1,7 @@
 <?php
 require_once("templates/template_header.php");
-session_start();
-if (isset($_SESSION['id']) == false) {
-    header("Location: login.php");
-    exit;
-} else {
-    $id = $_SESSION['id'];
-}
+require_once("config.php");
+$id = 31 ;
 ?>
 
 <body>
@@ -73,20 +68,20 @@ if (isset($_SESSION['id']) == false) {
             <div class="form-group row">
                 <span class="col-sm-2"></span>
                 <div class="col-sm-2">
-                    <button type="submit" id="submitBtn" class="btn btn-primary form-control">Submit</button>
+                    <button type="submit" id="submitBtn" class="btn btn-primary form-control">Ajouter</button>
                 </div>
             </div>
         </form>
 
         <script>
-
+            let API_URL_BASE = "<?php echo $API_URL_BASE ?>";
             // $(document).ready(function () {
 
             var userId = <?php echo json_encode($id); ?>;
             let dTable = $("#myTable").DataTable({
                 ajax: {
                     type: 'GET',
-                    url: `http://localhost/IDAW/Projet/backend/API/consommation.php?user_id=31`,
+                    url: API_URL_BASE + `/consommation.php?user_id=` + userId ,
                     dataSrc: 'data'
                 },
                 columns: [
@@ -115,7 +110,7 @@ if (isset($_SESSION['id']) == false) {
                 var row = $(event.target)
                 $.ajax({
                     type: 'DELETE',
-                    url: `http://localhost/IDAW/Projet/backend/API/consommation.php?id_consomme=${id_btn}`,
+                    url:  API_URL_BASE + `/consommation.php?id_consomme=${id_btn}`,
                     dataType: 'json',
                 }).always(function (response) {
                     dTable.row($(row).parents('tr')).remove().draw(true);
@@ -168,7 +163,7 @@ if (isset($_SESSION['id']) == false) {
 
                     $.ajax({
                         type: "PUT",
-                        url: "http://localhost/IDAW/Projet/backend/API/consommation.php",
+                        url: API_URL_BASE + '/consommation.php',
                         async: false,
                         method: "PUT",
                         dataType: "json",
@@ -177,18 +172,19 @@ if (isset($_SESSION['id']) == false) {
                     }).always(function (response) {
                         dTable.row(rowGlob).data(response.data).draw(false);
                     });
+                    $('#submitBtn').text('Ajouter');
                 } else {
                     var userData = {
                         aliment_id: $("#inputHidden").val(),
                         user_id: userId,
                         quantite: $("#inputQuantite").val(),
-                        date_consommation: $("#inputDate").val(), 
+                        date_consommation: $("#inputDate").val(),
 
                     };
 
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/IDAW/Projet/backend/API/consommation.php",
+                        url: API_URL_BASE + '/consommation.php',
                         data: userData,
                         dataType: 'json'
 
@@ -206,7 +202,7 @@ if (isset($_SESSION['id']) == false) {
 
             let dTable2 = $("#myTable2").DataTable({
                 ajax: {
-                    url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                    url: API_URL_BASE + '/aliments.php',
                     dataSrc: 'data'
                 },
                 columns: [

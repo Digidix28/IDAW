@@ -1,5 +1,6 @@
 <?php
 require_once("templates/template_header.php");
+require_once("config.php");
 ?>
 
 <body>
@@ -49,9 +50,10 @@ require_once("templates/template_header.php");
         </form>
 
         <script>
+            let API_URL_BASE = "<?php echo $API_URL_BASE ?>";
             let dTable = $("#myTable").DataTable({
                 ajax: {
-                    url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
+                    url: API_URL_BASE + '/aliments.php',
                     dataSrc: 'data'
                 },
                 columns: [
@@ -77,7 +79,7 @@ require_once("templates/template_header.php");
                 var row = $(event.target);
                 $.ajax({
                     type: 'DELETE',
-                    url: `http://localhost/projet/IDAW/Projet/backend/API/aliments.php?id=${id_btn}`,
+                    url: API_URL_BASE + `/aliments.php?id=${id_btn}`,
                     dataType: 'json',
                 }).always(function () {
                     dTable
@@ -113,7 +115,7 @@ require_once("templates/template_header.php");
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/projet/IDAW/Projet/backend/API/aliments.php",
+                        url: API_URL_BASE + '/aliments.php',
                         data: alimentsData,
                         dataType: 'json'
                     }).always(function (response) {
@@ -129,7 +131,7 @@ require_once("templates/template_header.php");
                     };
                     $.ajax({
                         type: "PUT",
-                        url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                        url: API_URL_BASE + '/aliments.php',
                         async: false,
                         method: "PUT",
                         dataType: "json",

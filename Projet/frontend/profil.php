@@ -1,13 +1,7 @@
 <?php
 require_once("templates/template_header.php");
-session_start();
-if (isset($_SESSION['id']) == false) {
-    header("Location: login.php");
-    exit;
-} else {
-    $id = $_SESSION['id'];
-}
-
+require_once("config.php") ;
+$id= 31 ;
 ?>
 
 <body>
@@ -66,10 +60,11 @@ if (isset($_SESSION['id']) == false) {
         </div>
     </main>
     <script>
+        let API_URL_BASE = "<?php echo $API_URL_BASE ?>";
         var userId = <?php echo json_encode($id); ?>;
         $.ajax({
             type: "GET",
-            url: `http://localhost/IDAW/Projet/backend/API/users.php?id_user=${userId}`,
+            url: API_URL_BASE + `/users.php?id_user=${userId}`,
             method: "GET",
 
         }).done(function (response) {
@@ -101,7 +96,7 @@ if (isset($_SESSION['id']) == false) {
 
             $.ajax({
                 type: "PUT",
-                url: "http://localhost/IDAW/Projet/backend/API/users.php",
+                url: API_URL_BASE + '/users.php',
                 async: false,
                 method: "PUT",
                 dataType: "json",
@@ -118,12 +113,7 @@ if (isset($_SESSION['id']) == false) {
                 $("#age").val(userData.age);
                 $("#poids").val(userData.poid);
             });
-
-
         }
-
-
-
     </script>
 </body>
 
