@@ -59,21 +59,30 @@ $id = 2;
                 data: {
                     id_user: userId,
                     fields: "nom,prenom,login,sexe,age,mdp"
-                },
-                success: function (response) {
-                    var userData = response.data[0];
-                    console.log(userData.prenom)
-                    $('#nom').val(userData.nom);
-                    $('#prenom').val(userData.prenom);
-                    $('#login').val(userData.login);
-                    $('#sexe').val(userData.sexe);
-                    $('#age').val(userData.age);
-                    $('#mdp').val(userData.mdp);
-                },
-                error: function (xhr, status, error) {
-                    console.log(error);
                 }
-            });
+                // success: function (response) {
+                //     var userData = response.data[0];
+                //     console.log(userData.prenom)
+                //     $('#nom').val(userData.nom);
+                //     $('#prenom').val(userData.prenom);
+                //     $('#login').val(userData.login);
+                //     $('#sexe').val(userData.sexe);
+                //     $('#age').val(userData.age);
+                //     $('#mdp').val(userData.mdp);
+                // },
+                // error: function (xhr, status, error) {
+                //     console.log(error);
+                // }
+            }).always(function (response) {
+                var userData = response.data;
+                    console.log(response)
+                    // $('#nom').val(userData.nom);
+                    // $('#prenom').val(userData.prenom);
+                    // $('#login').val(userData.login);
+                    // $('#sexe').val(userData.sexe);
+                    // $('#age').val(userData.age);
+                    // $('#mdp').val(userData.mdp);
+               });
         });
 
 
