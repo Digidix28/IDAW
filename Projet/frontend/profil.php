@@ -1,5 +1,13 @@
 <?php
 require_once("templates/template_header.php");
+session_start();
+if (isset($_SESSION['id']) == false) {
+    header("Location: login.php");
+    exit;
+} else {
+    $id = $_SESSION['id'];
+}
+
 ?>
 
 <body>
@@ -14,8 +22,14 @@ require_once("templates/template_header.php");
         </header>
         <p> bienvenue sur votre page de profil </p>
 
-        <form id="profil-form" action="" onsubmit="onSignUpFormSubmit();">
+        <form id="profil-form" action="" onsubmit="onSubmit();">
             <h2>My Profil</h2>
+            <div class="form-group row">
+                <label for="inputHidden" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-3">
+                    <input type="hidden" class="form-control" id="inputHidden">
+                </div>
+            </div>
             <div class="form-group">
                 <label for="email">Email :</label>
                 <input type="email" id="login" name="login" required>
@@ -42,7 +56,7 @@ require_once("templates/template_header.php");
             </div>
             <div class="form-group">
                 <label for="poid">Poids :</label>
-                <input type="number" id="poid" name="poid" required>
+                <input type="number" id="poids" name="poids" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="modifier">
@@ -51,20 +65,63 @@ require_once("templates/template_header.php");
         </div>
     </main>
     <script>
+        var userId = <?php echo json_encode($id); ?>;
         $.ajax({
-            url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
             type: "GET",
-            data: {
-                user_id: "2", // Replace with the actual user ID you want to retrieve
-                fields: "login,nom,prenom,sexe,age,mdp" // Specify the fields you want to retrieve, separated by commas
-            },
-            success: function (response) {
-                console.log(response.data.user_data); // The retrieved user data will be available in the user_data object
-            },
-            error: function (xhr, status, error) {
-                console.log(error); // Log any errors to the console
-            }
+            url: `http://localhost/IDAW/Projet/backend/API/users.php?id_user=${userId}`,
+            method: "GET",
+
+        }).done(function (response) {
+            console.log(response);
+            $("#inputHidden").val(userId);
+            $("#login").val(response.data['0'].login);
+            $("#mdp").val(response.data['0'].mdp);
+            $("#nom").val(response.data['0'].nom);
+            $("#prenom").val(response.data['0'].prenom);
+            $("#sexe").val(response.data['0'].sexe);
+            $("#age").val(response.data['0'].age);
+            $("#poids").val(response.data['0'].poid);
         });
+
+        function onSubmit() {
+            event.preventDefault();
+            var userData = {
+                id_user: $("#inputHidden").val(),
+                login: $("#login").val(),
+                mdp: $("#mdp").val(),
+                nom: $("#nom").val(),
+                prenom: $("#prenom").val(),
+                sexe: $("#sexe").val(),
+                age: $("#age").val(),
+                poid: $("#poids").val(),
+            };
+
+            console.log(userData);
+
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost/IDAW/Projet/backend/API/users.php",
+                async: false,
+                method: "PUT",
+                dataType: "json",
+                data: JSON.stringify(userData),
+
+            }).always(function (response) {
+                
+                $("#inputHidden").val(userId);
+                $("#login").val(userData.login);
+                $("#mdp").val(userData.mdp);
+                $("#nom").val(userData.nom);
+                $("#prenom").val(userData.prenom);
+                $("#sexe").val(userData.sexe);
+                $("#age").val(userData.age);
+                $("#poids").val(userData.poid);
+            });
+
+
+        }
+
+
     </script>
 </body>
 

@@ -149,7 +149,7 @@ if (isset($_SESSION['id']) == false) {
                 // change the submit button to an update button
                 $('#submitBtn').text('Update');
                 // $('#addConsommationForm').attr('onsubmit', 'onUpdate(${id});');
-
+                rowGlob = row;
             });
 
             function onFormSubmit() {
@@ -169,19 +169,20 @@ if (isset($_SESSION['id']) == false) {
                     $.ajax({
                         type: "PUT",
                         url: "http://localhost/IDAW/Projet/backend/API/consommation.php",
-                        data: userData,
-                        dataType: 'json'
+                        async: false,
+                        method: "PUT",
+                        dataType: "json",
+                        data: JSON.stringify(userData),
 
                     }).always(function (response) {
-                        dTable.row.add(response.data).draw(false);
+                        dTable.row(rowGlob).data(response.data).draw(false);
                     });
                 } else {
                     var userData = {
-
                         aliment_id: $("#inputHidden").val(),
                         user_id: userId,
                         quantite: $("#inputQuantite").val(),
-                        date_consommation: $("#inputDate").val(),
+                        date_consommation: $("#inputDate").val(), 
 
                     };
 
