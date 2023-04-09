@@ -17,7 +17,7 @@ if (isset($_SESSION['id']) == false) {
             <h2>Sommaire des pages</h2>
             <?php
             require_once("templates/template_menu.php");
-            renderMenuToHTML('cv');
+            renderMenuToHTML('aliments');
             ?>
         </header>
         <p> voici la liste des aliments présent dans notre base de donnes</p>
