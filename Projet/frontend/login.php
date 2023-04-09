@@ -12,11 +12,10 @@ require_once("templates/template_header.php");
                 <input type="email" id="loginMail" name="login" required>
             </div>
             <div class="form-group">
-                <label for="password">Mot de passe :</label>
                 <input type="password" id="logInpassword" name="password" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Se connecter...">
+                <input type="submit"  name="login-submit">
             </div>
         </form>
         <form id="signup-form" action="" onsubmit="onSignUpFormSubmit();">
@@ -50,7 +49,7 @@ require_once("templates/template_header.php");
                 <input type="number" id="poids" name="poids" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="S'inscrire...">
+                <input type="submit" value="S'inscrire..." name="signup-submit">
             </div>
         </form>
     </div>
@@ -77,6 +76,7 @@ require_once("templates/template_header.php");
             console.dir(userData);
 
             $.ajax({
+
                 type: "POST",
                 url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
                 data: userData,
@@ -86,43 +86,40 @@ require_once("templates/template_header.php");
                 id_user = response.data.user_data.id_user;
                 window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${userData.login}`);
 
-
             });
         }
+        $(document).ready(function () {
+            function onLogInFormSubmit(event) {
+                // prevent the form to be sent to the server
+                event.preventDefault();
 
-        function onLogInFormSubmit() {
-            // prevent the form to be sent to the server
-            event.preventDefault();
+                var userData = {
 
-            var userData = {
+                    login: $("#loginMail").val(),
+                    mdp: $("#logInpassword").val()
+                };
 
-                login: $("#loginMail").val(),
-                mdp: $("#logInpassword").val()
+                console.dir(userData);
 
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
+                    data: userData,
+                    dataType: 'json'
 
-            };
+                }).done(function (response) {
 
-            console.dir(userData);
+                    var isConnected = response.data.user_exists;
+                    id_user = response.data.user_data.id_user;
+                    console.log(isConnected);
 
-            $.ajax({
-                type: "GET",
-                url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
-                data: userData,
-                dataType: 'json'
+                    if (isConnected) {
+                        window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${id_user}`);
 
-            }).done(function (response) {
+                    } else {
+                        console.log("dans le else");
 
-                var isConnected = response.data.user_exists;
-                id_user = response.data.user_data.id_user;
-                console.log(isConnected);
-
-                if (isConnected) {
-
-                    
-                    window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${id_user}`);
-
-                } else {
-
-                }
-            });
-        }
+                    }
+                });
+            }
+        });
