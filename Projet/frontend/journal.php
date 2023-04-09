@@ -16,7 +16,7 @@ if (isset($_SESSION['id']) == false) {
             <div class="container">
                 <?php
                 require_once("templates/template_menu.php");
-                renderMenuToHTML('hobies');
+                renderMenuToHTML('journal');
                 ?>
             </div>
         </header>

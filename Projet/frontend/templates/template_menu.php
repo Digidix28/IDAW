@@ -1,12 +1,12 @@
-
 <?php
 
 function renderMenuToHTML($current_id){
     $myMenu = array(
-        "index" => array("Acceuil"),
+        "index" => array("Accueil"),
         "aliments" => array("Aliments"),
         "journal" => array("Mon journal"),
-        "profil" => array("Mon profil")
+        "profil" => array("Mon profil"),
+        "dashboard" => array("Tableau de bord")
     );
 
 

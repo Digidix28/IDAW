@@ -17,7 +17,7 @@ if (isset($_SESSION['id']) == false) {
             <h2>Sommaire des pages</h2>
             <?php
             require_once("templates/template_menu.php");
-            renderMenuToHTML('infos_techniques');
+            renderMenuToHTML('profil');
             ?>
         </header>
         <p> bienvenue sur votre page de profil </p>
