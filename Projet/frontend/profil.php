@@ -10,6 +10,15 @@ if (isset($_SESSION['id']) == false) {
 
 ?>
 
+
+session_start();
+if (isset($_SESSION['id']) == false) {
+    header("Location: login.php");
+    exit;
+} else {
+    $id = $_SESSION['id'];
+}
+?>
 <body>
     <main>
         <header>
@@ -62,6 +71,7 @@ if (isset($_SESSION['id']) == false) {
                 <input type="submit" value="modifier">
             </div>
         </form>
+
         </div>
     </main>
     <script>
@@ -120,6 +130,7 @@ if (isset($_SESSION['id']) == false) {
 
 
         }
+
 
 
     </script>
