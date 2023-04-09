@@ -1,14 +1,8 @@
 <?php
 require_once("templates/template_header.php");
-
-session_start();
-if (isset($_SESSION['id']) == false) {
-    header("Location: login.php");
-    exit;
-} else {
-    $id = $_SESSION['id'];
-}
+$id = 2;
 ?>
+
 <body>
     <main>
         <header>
@@ -51,7 +45,7 @@ if (isset($_SESSION['id']) == false) {
                     <label for="mdp">Mot de passe :</label>
                     <input type="password" class="form-control" id="mdp" name="mdp">
                 </div>
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <button type="submit" class="btn btn-primary">Modifier</button>
             </form>
         </div>
     </main>
@@ -61,12 +55,14 @@ if (isset($_SESSION['id']) == false) {
             $.ajax({
                 url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
                 type: "GET",
+                dataType: "json",
                 data: {
                     id_user: userId,
                     fields: "nom,prenom,login,sexe,age,mdp"
                 },
                 success: function (response) {
-                    var userData = response.data.user_data;
+                    var userData = response.data[0];
+                    console.log(userData.prenom)
                     $('#nom').val(userData.nom);
                     $('#prenom').val(userData.prenom);
                     $('#login').val(userData.login);
@@ -75,7 +71,7 @@ if (isset($_SESSION['id']) == false) {
                     $('#mdp').val(userData.mdp);
                 },
                 error: function (xhr, status, error) {
-                    console.log(error); 
+                    console.log(error);
                 }
             });
         });
