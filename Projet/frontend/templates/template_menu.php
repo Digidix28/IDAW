@@ -8,6 +8,7 @@ function renderMenuToHTML($current_id){
         "journal" => array("Mon journal"),
         "profil" => array("Mon profil")
         
+        
     );
 
 
