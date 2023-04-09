@@ -22,7 +22,7 @@ function getConsommation($pdo, $userId)
 
 }
 
-function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
+function addConsommation($pdo, $idUser, $idAliment, $quantite, $dateConsommation)
 {
     $sql = "SET FOREIGN_KEY_CHECKS=0;";
     $stmt = $pdo->prepare($sql);
@@ -57,25 +57,37 @@ function addConsommation($pdo,$idUser,$idAliment,$quantite,$dateConsommation)
 }
 
 
-function deleteConsommation($pdo,$idConsomme){
-    
+function deleteConsommation($pdo, $idConsomme)
+{
+
     $request = $pdo->prepare("DELETE FROM consomme 
     WHERE id_consomme = $idConsomme");
     $request->execute();
 
 }
 
-function updateConsommation($pdo,$id_consomme,$quantite,$dateConsommation){
-    
+function updateConsommation($pdo, $id_consomme, $quantite, $dateConsommation)
+{
+
     $sql = "UPDATE consomme 
     SET quantité = :quantite, date_consommation = :dateConsommation 
-    WHERE id_consomme = :id_consomme AND id_alim = :idAliment";
+    WHERE id_consomme = :id_consomme";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':idUser', $id_consomme);
+    $stmt->bindParam(':id_consomme', $id_consomme);
     $stmt->bindParam(':quantite', $quantite);
     $stmt->bindParam(':dateConsommation', $dateConsommation);
     $stmt->execute();
 
+    $sql = "SELECT  aliments.nom, consomme.quantité, consomme.date_consommation
+    FROM consomme
+    INNER JOIN aliments ON consomme.id_alim = aliments.id
+    WHERE consomme.id_consomme = :id_consomme
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':id_consomme', $id_consomme);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 ?>
