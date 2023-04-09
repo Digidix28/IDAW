@@ -1,7 +1,13 @@
 <?php
 require_once("templates/template_header.php");
 require_once("config.php");
-$id = 31 ;
+session_start();
+if (isset($_GET['id'])) {
+    $_SESSION['id'] = $_GET['id'];
+
+} else {
+    header("Location: login.php");
+}
 ?>
 
 <body>
