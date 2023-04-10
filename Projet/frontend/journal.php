@@ -3,7 +3,7 @@ require_once("templates/template_header.php");
 require_once("config.php");
 session_start();
 if (isset($_SESSION['id'])) {
-    $id= $_SESSION['id'];
+    $id = $_SESSION['id'];
 
 
 } else {
@@ -15,10 +15,10 @@ if (isset($_SESSION['id'])) {
     <main>
         <header>
             <h1>Journal de consommation</h1>
-                <?php
-                require_once("templates/template_menu.php");
-                renderMenuToHTML('journal');
-                ?>
+            <?php
+            require_once("templates/template_menu.php");
+            renderMenuToHTML('journal');
+            ?>
         </header>
         <h3> Inscrivez ce que vous consommez, afin de tenir un journal des plats que vous avez consommés</h3>
         <table class="table" id="myTable">
@@ -87,7 +87,7 @@ if (isset($_SESSION['id'])) {
             let dTable = $("#myTable").DataTable({
                 ajax: {
                     type: 'GET',
-                    url: API_URL_BASE + `/consommation.php?user_id=` + userId ,
+                    url: API_URL_BASE + `/consommation.php?user_id=` + userId,
                     dataSrc: 'data'
                 },
                 columns: [
@@ -116,7 +116,7 @@ if (isset($_SESSION['id'])) {
                 var row = $(event.target)
                 $.ajax({
                     type: 'DELETE',
-                    url:  API_URL_BASE + `/consommation.php?id_consomme=${id_btn}`,
+                    url: API_URL_BASE + `/consommation.php?id_consomme=${id_btn}`,
                     dataType: 'json',
                 }).always(function (response) {
                     dTable.row($(row).parents('tr')).remove().draw(true);
@@ -177,8 +177,12 @@ if (isset($_SESSION['id'])) {
 
                     }).always(function (response) {
                         dTable.row(rowGlob).data(response.data).draw(false);
+
                     });
                     $('#submitBtn').text('Ajouter');
+                 
+
+
                 } else {
                     var userData = {
                         aliment_id: $("#inputHidden").val(),

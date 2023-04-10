@@ -1,12 +1,13 @@
 <?php
 require_once("templates/template_header.php");
 session_start();
-if (isset($_GET['id'])) {
-    $_SESSION['id'] = $_GET['id'];
+// Unset all session variables
+session_unset();
 
-} else {
-    header("Location: login.php");
-}
+// Destroy the session
+session_destroy();
+
+header("Location: login.php");
 ?>
 
 <body>

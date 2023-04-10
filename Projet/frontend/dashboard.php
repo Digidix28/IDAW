@@ -5,13 +5,17 @@ session_start();
 
 if (isset($_GET['id'])) {
     $_SESSION['id'] = $_GET['id'];
+}
 
-} elseif (isset($_SESSION['id'])) {
+if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
 } else {
     header("Location: login.php");
     exit;
 }
+
+
+
 ?>
 
 <body>

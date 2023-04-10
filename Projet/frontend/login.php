@@ -1,6 +1,13 @@
 <?php
 require_once("templates/template_header.php");
 require_once("config.php");
+session_start();
+
+session_unset();
+
+// Destroy the session
+session_destroy();
+
 ?>
 
 <body>
