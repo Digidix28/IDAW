@@ -7,8 +7,8 @@
 - Page journal affichant les consomation d'un utilisateur avec possibilité d’ajouter une entrée
 - Page login permettant de se connecter à son compte utilisateur ou créer un nouveau ( vous pouvez vous connecter à n'importe quel compte utilisateur de la base de données ou en créer un nouveau via le form )
 voici les login et mot de passe sugérer pour le test (nouveau avons fait en sorte de remplir les données pour ce compte utilisateur)
-- Login : 
-- Mot De Passe :
+- Login : admin@gmail.com
+- Mot De Passe : 0
 
 ## Architecture
 L’architecture de l'application est conforme à l'architecture REST et donc découpée en 2 parties : le backend et le frontend. Le backend est écrit en PHP standard sans l'utilisation de framework ou bibliothèque externe. Le frontend utilise Bootstrap CSS, JQuery et Datatables.
@@ -37,7 +37,8 @@ Le frontend est constitué du code HTML, CSS, JS et PHP qui permet d’envoyer l
 
 - `aliments.php`: la page contenat tout les aliments avec la possibilités de rajouter des aliments en écrivant leurs nom dans le form et en leur assigant un id_type compris de 1 à 11
 - `config.php` : contenat les variable globale c'est ici que vous pouvez modifiez les chemins pour les différent endpoints et autre URL enn fonction de votre machine
-- `index.php` : la page d'aceuil
+- `dashboard.php`: affiche le contenu des consomations hebdomadaire 
+- `index.php` : la page de déconnexion
 - `journal.php` :  la page de journal ou l'on peut ajouter , modifer ou suprimer des consommation
 - `login.php` : la page de login et de signup 
 - `profil.php`: la page contenat les informations de l'tilisateur actuel, les données de l'utilisateur sont modifiables via cet page.
