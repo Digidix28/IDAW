@@ -56,7 +56,6 @@ require_once("templates/template_header.php");
     </div>
 
 
-
     <script>
 
         function onSignUpFormSubmit() {
@@ -78,18 +77,21 @@ require_once("templates/template_header.php");
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
+                url: "http://localhost/IDAW/Projet/backend/API/users.php",
                 data: userData,
                 dataType: 'json'
 
             }).done(function (response) {
                 id_user = response.data.user_data.id_user;
-                window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+                window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${userData.login}`);
 
 
             });
         }
 
+        $(document).ready(function () {
+
+        })
         function onLogInFormSubmit() {
             // prevent the form to be sent to the server
             event.preventDefault();
@@ -98,31 +100,29 @@ require_once("templates/template_header.php");
 
                 login: $("#loginMail").val(),
                 mdp: $("#logInpassword").val()
-
-
             };
-
-            console.dir(userData);
 
             $.ajax({
                 type: "GET",
-                url: "http://localhost/projet/IDAW/Projet/backend/API/users.php",
-                data: userData,
-                dataType: 'json'
+                url: `http://localhost/IDAW/Projet/backend/API/users.php?login=${userData.login}&mdp=${userData.mdp}`,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'text json',
+                cache: false,
 
             }).done(function (response) {
-
-                var isConnected = response.data.user_exists;
+                console.log(response);
+                let isConnected = response.data.user_exists;
                 id_user = response.data.user_data.id_user;
                 console.log(isConnected);
 
                 if (isConnected) {
 
-                    
-                    window.location.replace(`http://localhost/projet/IDAW/Projet/frontend/index.php?id=${id_user}`);
+                    window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${id_user}`);
 
                 } else {
 
                 }
             });
         }
+
+    </script>
