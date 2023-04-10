@@ -2,8 +2,8 @@
 require_once("templates/template_header.php");
 require_once("config.php");
 session_start();
-if (isset($_GET['id'])) {
-    $_SESSION['id'] = $_GET['id'];
+if (isset($_SESSION['id'])) {
+    $id= $_SESSION['id'];
 
 
 } else {
