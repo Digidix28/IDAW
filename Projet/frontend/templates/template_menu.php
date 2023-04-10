@@ -2,7 +2,7 @@
 
 function renderMenuToHTML($current_id){
     $myMenu = array(
-        "index" => array("Accueil"),
+        "index" => array("déconnection"),
         "dashboard" => array("Tableau de bord"),
         "aliments" => array("Aliments"),
         "journal" => array("Mon journal"),

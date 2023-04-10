@@ -83,7 +83,7 @@ require_once("templates/template_header.php");
 
             }).done(function (response) {
                 id_user = response.data.user_data.id_user;
-                window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${userData.login}`);
+                window.location.replace(`http://localhost/IDAW/Projet/frontend/dashboard.php?id=${id_user}`);
 
 
             });
@@ -117,7 +117,7 @@ require_once("templates/template_header.php");
 
                 if (isConnected) {
 
-                    window.location.replace(`http://localhost/IDAW/Projet/frontend/index.php?id=${id_user}`);
+                    window.location.replace(`http://localhost/IDAW/Projet/frontend/dashboard.php?id=${id_user}`);
 
                 } else {
 
