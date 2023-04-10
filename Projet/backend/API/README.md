@@ -1,5 +1,5 @@
 # README de l'API
-Il s'agit d'une API RESTful simple construite avec PHP et PDO pour la gestion des aliments dans une base de données.
+Il s'agit d'une API RESTful simple construite avec PHP et PDO pour la gestion des aliments, users , et consomation dans notre base de données.
 
 # Points d'accès de l'API
 Les points d'accès suivants sont disponibles :
@@ -118,6 +118,7 @@ En cas d'erreur, l'API renvoie une réponse avec le code HTTP 400 (Bad Request) 
 
 # Endpoints
 voici les endpoint de l'api : 
+
 # GET /consommation?user_id={user_id}
 Récupère la liste des consommations pour l'utilisateur ayant l'identifiant user_id.
 
@@ -143,6 +144,7 @@ La réponse est un objet JSON contenant un tableau de consommations pour l'utili
     }
   ]
 }
+
 # POST /consommation
 Ajoute une nouvelle consommation pour un utilisateur.
 
@@ -170,6 +172,7 @@ La réponse est un objet JSON contenant les informations de la consommation ajou
     "date_consommation": "2023-04-10 12:34:56"
   }
 }
+
 # DELETE /consommation?id_consomme={id_consomme}
 Supprime la consommation ayant l'identifiant id_consomme.
 
