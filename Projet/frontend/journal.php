@@ -14,12 +14,10 @@ if (isset($_GET['id'])) {
     <main>
         <header>
             <h1>Journal de consommation</h1>
-            <div class="container">
                 <?php
                 require_once("templates/template_menu.php");
                 renderMenuToHTML('journal');
                 ?>
-            </div>
         </header>
         <h3> Inscrivez ce que vous consommez, afin de tenir un journal des plats que vous avez consommés</h3>
         <table class="table" id="myTable">
@@ -80,6 +78,7 @@ if (isset($_GET['id'])) {
         </form>
 
         <script>
+
             let API_URL_BASE = "<?php echo $API_URL_BASE ?>";
             // $(document).ready(function () {
 
@@ -149,7 +148,7 @@ if (isset($_GET['id'])) {
 
                 // change the submit button to an update button
                 $('#submitBtn').text('Update');
-                // $('#addConsommationForm').attr('onsubmit', 'onUpdate(${id});');
+                document.getElementById("addConsommationForm").scrollIntoView({ behavior: "smooth" });
                 rowGlob = row;
             });
 
@@ -237,14 +236,10 @@ if (isset($_GET['id'])) {
                 $('#inputHidden').val(id_aliment);
 
             });
-            // });
         </script>
 
 
     </main>
-    <?php
-    // require_once("templates/footer_template.php")
-    ?>
 </body>
 
 </html>

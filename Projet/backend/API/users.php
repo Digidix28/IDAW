@@ -1,5 +1,8 @@
 <?php
-header('Content-Type: application/json');
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+header('Content-Type: application/json; charset=utf-8');
+
 require_once("../crud_functions/users.php");
 require_once("config.php");
 
@@ -7,6 +10,7 @@ require_once("config.php");
 try {
     $pdo = new PDO($connectionString, _MYSQL_USER, _MYSQL_PASSWORD, $options);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     $request_method = $_SERVER["REQUEST_METHOD"];
     switch ($request_method) {
         case 'GET':
@@ -14,10 +18,10 @@ try {
             if (isset($_GET['login']) && isset($_GET['mdp'])) {
                 $login = $_GET['login'];
                 $mdp = $_GET['mdp'];
-                $user = getUsers($pdo, $login, $mdp);
-                $res = ["data" => $user];
+                $users = getUsers($pdo, $login, $mdp);
+                $res = ["data" => $users];
                 echo json_encode($res);
-                http_response_code(201);
+                http_response_code(200);
             }
             elseif (isset($_GET['id_user'])){
                 $id_user = $_GET['id_user'];

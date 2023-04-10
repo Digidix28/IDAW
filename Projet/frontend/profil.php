@@ -5,6 +5,7 @@ session_start();
 if (isset($_GET['id'])) {
     $_SESSION['id'] = $_GET['id'];
 
+
 } else {
     header("Location: login.php");
 }
@@ -12,17 +13,17 @@ if (isset($_GET['id'])) {
 <body>
     <main>
         <header>
-            <h1>Page d'accueil</h1>
-            <h2>Sommaire des pages</h2>
+            <h1>Profil</h1>
+            <!-- <h2>Sommaire des pages</h2> -->
             <?php
             require_once("templates/template_menu.php");
             renderMenuToHTML('profil');
             ?>
         </header>
-        <p> bienvenue sur votre page de profil </p>
+        <h3> Modifiez vos données en toute liberté </h3>
 
         <form id="profil-form" action="" onsubmit="onSubmit();">
-            <h2>My Profil</h2>
+            <h2>Mes données personnelles</h2>
             <div class="form-group row">
                 <label for="inputHidden" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-3">

@@ -8,13 +8,16 @@ function addUser($pdo, $nom, $prenom, $login, $sexe, $age, $mdp, $poid)
 }
 function getUsers($pdo, $login, $mdp)
 {
-    $request = $pdo->prepare("SELECT * FROM users WHERE login = :login AND mdp = :mdp");
-    $request->execute(['login' => $login, 'mdp' => $mdp]);
-    $resultat = $request->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE login = :login AND mdp = :mdp");
+    $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+    $stmt->bindParam(':mdp', $mdp, PDO::PARAM_STR);
+    $stmt->execute();
+    $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $user_exists = count($resultat) > 0;
     $user_data = $user_exists ? $resultat[0] : null;
     return ['user_exists' => $user_exists, 'user_data' => $user_data];
 }
+
 function getUserswithid($pdo, $id)
 {
     $request = $pdo->prepare("SELECT * FROM users WHERE id_user = :id_user ");
