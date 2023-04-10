@@ -105,6 +105,7 @@ require_once("templates/template_header.php");
             $.ajax({
                 type: "GET",
                 url: `http://localhost/IDAW/Projet/backend/API/users.php?login=${userData.login}&mdp=${userData.mdp}`,
+
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'text json',
                 cache: false,
@@ -118,6 +119,7 @@ require_once("templates/template_header.php");
                 if (isConnected) {
 
                     window.location.replace(`http://localhost/IDAW/Projet/frontend/dashboard.php?id=${id_user}`);
+
 
                 } else {
 

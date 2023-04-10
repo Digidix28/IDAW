@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 header('Content-Type: application/json; charset=utf-8');
+
 require_once("../crud_functions/users.php");
 require_once("config.php");
 

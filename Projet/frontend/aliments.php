@@ -1,15 +1,14 @@
 <?php
 require_once("templates/template_header.php");
-
+require_once("config.php");
 session_start();
-if (isset($_SESSION['id']) == false) {
-    header("Location: login.php");
-    exit;
+if (isset($_GET['id'])) {
+    $_SESSION['id'] = $_GET['id'];
+
 } else {
-    $id = $_SESSION['id'];
+    header("Location: login.php");
 }
 ?>
-
 <body>
     <main>
         <header>
@@ -57,9 +56,10 @@ if (isset($_SESSION['id']) == false) {
         </form>
 
         <script>
+            let API_URL_BASE = "<?php echo $API_URL_BASE ?>";
             let dTable = $("#myTable").DataTable({
                 ajax: {
-                    url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                    url: API_URL_BASE + '/aliments.php',
                     dataSrc: 'data'
                 },
                 columns: [
@@ -85,7 +85,7 @@ if (isset($_SESSION['id']) == false) {
                 var row = $(event.target);
                 $.ajax({
                     type: 'DELETE',
-                    url: `http://localhost/IDAW/Projet/backend/API/aliments.php?id=${id_btn}`,
+                    url: API_URL_BASE + `/aliments.php?id=${id_btn}`,
                     dataType: 'json',
                 }).always(function () {
                     dTable
@@ -121,7 +121,7 @@ if (isset($_SESSION['id']) == false) {
                     };
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                        url: API_URL_BASE + '/aliments.php',
                         data: alimentsData,
                         dataType: 'json'
                     }).always(function (response) {
@@ -137,7 +137,7 @@ if (isset($_SESSION['id']) == false) {
                     };
                     $.ajax({
                         type: "PUT",
-                        url: "http://localhost/IDAW/Projet/backend/API/aliments.php",
+                        url: API_URL_BASE + '/aliments.php',
                         async: false,
                         method: "PUT",
                         dataType: "json",
