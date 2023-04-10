@@ -1,5 +1,6 @@
 <?php
 require_once("templates/template_header.php");
+require_once("config.php");
 ?>
 
 <body>
@@ -57,7 +58,8 @@ require_once("templates/template_header.php");
 
 
     <script>
-
+        let API_URL_BASE = "<?php echo $API_URL_BASE ?>";
+        let WINDOW_URL_BASE = "<?php echo $WINDOW_URL_BASE ?>";
         function onSignUpFormSubmit() {
 
             event.preventDefault();
@@ -77,13 +79,13 @@ require_once("templates/template_header.php");
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/IDAW/Projet/backend/API/users.php",
+                url: API_URL_BASE + "/API/users.php",
                 data: userData,
                 dataType: 'json'
 
             }).done(function (response) {
                 id_user = response.data.user_data.id_user;
-                window.location.replace(`http://localhost/IDAW/Projet/frontend/dashboard.php?id=${id_user}`);
+                window.location.replace(WINDOW_URL_BASE + `/dashboard.php?id=${id_user}`);
 
 
             });
@@ -104,7 +106,7 @@ require_once("templates/template_header.php");
 
             $.ajax({
                 type: "GET",
-                url: `http://localhost/IDAW/Projet/backend/API/users.php?login=${userData.login}&mdp=${userData.mdp}`,
+                url: API_URL_BASE + `/users.php?login=${userData.login}&mdp=${userData.mdp}`,
 
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'text json',
@@ -118,7 +120,7 @@ require_once("templates/template_header.php");
 
                 if (isConnected) {
 
-                    window.location.replace(`http://localhost/IDAW/Projet/frontend/dashboard.php?id=${id_user}`);
+                    window.location.replace(WINDOW_URL_BASE + `/dashboard.php?id=${id_user}`);
 
 
                 } else {
