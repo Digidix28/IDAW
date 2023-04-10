@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 10 avr. 2023 à 04:35
+-- Généré le : lun. 10 avr. 2023 à 05:43
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -11,6 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 SET FOREIGN_KEY_CHECKS=0;
+
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -3264,7 +3265,7 @@ CREATE TABLE IF NOT EXISTS `consomme` (
   PRIMARY KEY (`id_consomme`),
   KEY `EST_MANGER` (`id_alim`),
   KEY `CONSOMME` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `consomme`
@@ -3281,7 +3282,12 @@ INSERT INTO `consomme` (`id_consomme`, `id_user`, `id_alim`, `quantité`, `date_
 (42, 31, 857, '4', '2023-04-04'),
 (45, 31, 1321, '2', '2023-04-11'),
 (47, 31, 447, '3', '2023-04-01'),
-(48, 31, 730, '1', '2023-04-15');
+(48, 31, 730, '1', '2023-04-15'),
+(49, 29, 1228, '6', '2023-04-13'),
+(50, 29, 1175, '1', '2023-04-01'),
+(51, 29, 1320, '10000', '2023-04-10'),
+(52, 29, 2064, '300', '2023-04-10'),
+(53, 29, 1934, '600', '2023-04-10');
 
 -- --------------------------------------------------------
 
@@ -15832,8 +15838,8 @@ INSERT INTO `users` (`id_user`, `login`, `nom`, `prenom`, `sexe`, `age`, `mdp`, 
 (23, 'julia.zink@etu.imt-lille-douai.fr', 'ZINK', 'Julia', 1, 42, 1000022, 55, NULL),
 (24, 'alexandre.favreau@etu.imt-lille-douai.fr', 'FAVREAU', 'Alexandre', 0, 43, 1000023, 78, NULL),
 (25, 'nilavan.deva@etu.imt-lille-douai.fr', 'DEVA', 'Nilavan', 1, 44, 1000024, 45, NULL),
-(29, 'idriss.jeaid@gmail.com', 'Jeaidi', 'Idriss', 0, 21, 2206, 70, NULL),
-(30, 'admin@gmail.com', 'admin', 'admin', 1, 39, 1111, 80, NULL),
+(29, 'admin2@gmail.com', 'admin2', 'admin2', 0, 21, 2, 70, NULL),
+(30, 'admintest@gmail.com', 'admin', 'admin', 1, 39, 1111, 80, NULL),
 (31, 'admin@gmail.com', 'Malibou', 'Thomas', 0, 40, 0, 60, NULL);
 
 --

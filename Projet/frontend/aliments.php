@@ -14,7 +14,6 @@ if (isset($_SESSION['id'])) {
     <main>
         <header>
             <h1>Page d'indexation des aliments</h1>
-            <h2>Sommaire des pages</h2>
             <?php
             require_once("templates/template_menu.php");
             renderMenuToHTML('aliments');
