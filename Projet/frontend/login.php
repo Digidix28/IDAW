@@ -86,12 +86,12 @@ session_destroy();
 
             $.ajax({
                 type: "POST",
-                url: API_URL_BASE + "/API/users.php",
+                url: API_URL_BASE + "/users.php",
                 data: userData,
                 dataType: 'json'
 
             }).done(function (response) {
-                id_user = response.data.user_data.id_user;
+                id_user = response.data;
                 window.location.replace(WINDOW_URL_BASE + `/dashboard.php?id=${id_user}`);
 
 
